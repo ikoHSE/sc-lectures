@@ -1,0 +1,887 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/superblack.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/monokai.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h2>Функциональное программирование</h2>
+        <aside class="notes" data-markdown>
+          Функциональное программирование это не про использование map filter reduce.
+
+          Функциональное программирование это вообще ортогонально к ооп.
+
+          ИМХО проблема с ООП -- наследование (которое тоже ортогонально к ООП) -- нет разграничения между абстракцией и
+          реализацией.
+
+          и вообще обзывание это функциональным программированием -- не совсем правильно.
+
+          то, что мы сейчас будем пытаться сделать -- сделать код более переиспользуемым.
+
+          сделать наши данные максимально тупыми => переиспользуемыми.
+
+          пытаться комбинировать слишком умные куски -- не получится -- слишком сложно.
+
+          мы хотим сделать простые куски, которые просто комбинировать и еще чтобы компилятор проверял эти наши
+          комбинации на валидность.
+        </aside>
+      </section>
+      <section data-markdown>
+        Функциональное программирование:
+        > функции -- это тоже данные.
+
+        `Int -> Bool` (функция) -- ровно такие же данные как и `Int`. Их также можно складывать в структуры,
+        передавать как аргументы и т. п.
+      </section>
+
+      <section>
+        <section>
+          <h1>нотация</h1>
+        </section>
+        <section>
+          <table width="100%">
+            <tr>
+              <td>
+                <pre>
+                  <code class="java">int x;</code>
+                </pre>
+              </td>
+              <td>
+                <pre>
+                  <code class="haskell">x :: Int</code>
+                </pre>
+              </td>
+            </tr>
+            <tr class="fragment">
+              <td>
+                <pre>
+                  <code class="java">int f(int x)</code>
+                </pre>
+              </td>
+              <td>
+                <pre>
+                  <code class="haskell">f :: Int -> Int</code>
+                </pre>
+              </td>
+            </tr>
+            <tr class="fragment">
+              <td>
+                <pre>
+                  <code class="java">static &lt;T&gt; T f(T x)</code>
+                </pre>
+
+              </td>
+              <td>
+                <pre>
+                  <code class="haskell">f :: a -> a</code>
+                </pre>
+              </td>
+            </tr>
+          </table>
+        </section>
+        <section>
+          <table width="100%">
+            <tr>
+              <td>
+                <pre>
+                  <code class="java">static &lt;T&gt; T f(T x)</code>
+                </pre>
+              </td>
+              <td>
+                <pre>
+                  <code class="haskell">f :: a -> a</code>
+                </pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="fragment">
+                <pre>
+                  <code class="java">f(x);</code>
+                </pre>
+              </td>
+              <td class="fragment">
+                <pre>
+                  <code class="haskell">f x</code>
+                </pre>
+              </td>
+            </tr>
+            <tr class="fragment">
+              <td>
+                <pre>
+                  <code class="java">f(x, y);</code>
+                </pre>
+              </td>
+              <td>
+                <pre>
+                  <code class="haskell">f x y</code>
+                </pre>
+                <pre class="fragment">
+                  <code class="haskell">f x y = (f x) y</code>
+                </pre>
+                <aside class="notes">
+                  Left-associative
+                  Currying
+                </aside>
+              </td>
+              </td>
+            </tr>
+          </table>
+        </section>
+        <section>
+          <table width="100%">
+            <tr>
+              <td>
+                <pre>
+                  <code class="java">static &lt;T&gt; T f(T x)
+static &lt;T&gt; T g(T x)</code>
+                </pre>
+              </td>
+              <td>
+                <pre>
+                  <code class="haskell">f :: a -> a
+g :: a -> a</code>
+                </pre>
+              </td>
+            </tr>
+            <tr class="fragment">
+              <td>
+                <pre>
+                  <code class="java">f(g(x));
+g(f(x));</code>
+                </pre>
+              </td>
+              <td class="fragment">
+                <pre>
+                  <code class="haskell">f (g x)
+g (f x)</code>
+                </pre>
+              </td>
+            </tr>
+          </table>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h1>
+            Композиция
+          </h1>
+        </section>
+        <section>
+          <pre><code class="haskell">f :: a -> a
+g :: a -> a</code></pre>
+          <pre class="fragment"><code class="haskell">f (g x)</code></pre>
+          <pre class="fragment"><code class="haskell">(f . g) x == f (g x)</code></pre>
+          <pre class="fragment"><code class="haskell">h = f . g
+h x == f (g x)</code></pre>
+        </section>
+        <section>
+          <pre><code class="haskell">f :: a -> a
+g :: a -> a
+
+h :: a -> a
+h = f . g</code></pre>
+
+          <h3 class="fragment">моноид</h3>
+
+          <aside class="notes" data-markdown>
+            моноид -- у тебя есть две штуки одного типа и ты можешь получить еще одну
+            штуку такого же
+            типа.
+
+            Это очень простой способ рождения сложности из простоты
+
+            причем тип h выводится из определения. Нам его указывать не надо.
+
+            если у нас изначальные маленькие кусочки хорошо описаны, то порожденные большие кусочки будут автоматически
+            хорошо описанными.
+          </aside>
+        </section>
+        <section>
+          <h3>
+            Моноид
+          </h3>
+
+          <p class="fragment">
+            Бинарная асоциативная операция
+          </p>
+
+          <pre><code class="haskell fragment">(.) :: (a -> a) -> (a -> a) -> (a -> a)</code></pre>
+
+          <p class="fragment">
+            Нейтральный элемент
+          </p>
+
+          <pre><code class="haskell fragment">id :: a -> a
+id x = x</code></pre>
+        </section>
+      </section>
+      </section>
+      <section>
+        <section>
+          <h2>Haskell</h2>
+        </section>
+        <section>
+          <h3>Чисто функционаьлный</h3>
+          <p class="fragment" data-markdown>Все что функция может сделать -- посмотреть на свои аргументы это вернуть
+            значение.</p>
+          <aside class="notes" data-markdown>Нельзя просто произвольно распечатать строку в консоль, нельзя просто
+            произвольно
+            отправить запрос на бд, нельзя просто произвольно изменить глобальную переменную.</aside>
+        </section>
+        <section>
+          <h3>Referential transparency</h3>
+          <h5>(Любую константу можно заменить на само значение)</h5>
+          <pre><code class="java fragment">int x = 8;
+int y = x++;
+System.out.println(y + " might be the same as " + y);</code></pre>
+          <pre><code class="java fragment">int x = 8;
+System.out.println(x++ + " might be the same as " + x++);</code></pre>
+
+          <aside class="notes" data-markdown>Сильно упрощает рефакторинг и понимание кода.</aside>
+        </section>
+        <section>
+          <h3>Нет переменных, циклов и условных переходов</h3>
+
+          <p class="fragment" data-markdown>
+            Зато есть константы и нормальная рекурсия
+
+            (А переходов вообще нет)
+          </p>
+        </section>
+        <section>
+          <h3>Очень ленивый</h3>
+
+          <pre><code class="haskell fragment">xs = [4, 1, 3, 2]
+xs' = sort xs
+print xs</code></pre>
+
+          <p class="fragment" data-markdown>
+            `xs'` не нужен чтобы распечатать `xs`, поэтому сортироваться ничто не будет.
+
+            (Зачем делать то, что можно не делать)
+          </p>
+        </section>
+        <section>
+          <p>Если хотите быстро и просто потыкаться, тут есть интерктивная штука:</p>
+          <a href="https://www.haskell.org">haskell.org</a>
+        </section>
+      </section>
+      <section>
+        <h2>Синтаксис</h2>
+      </section>
+      <section>
+        <section>
+          <h2>Функции</h2>
+        </section>
+        <section>
+          <pre><code class="haskell">add2 :: Int -> Int
+add2 x = x + 2</code></pre>
+          <p>Все функции и константы всегда обозначаются словами с маленькой буквы без пробелов.</p>
+          <p>(Константы это просто функции с нулем аргументов.)</p>
+        </section>
+        <section>
+          <h3>Pattern mathcing</h3>
+          <pre><code class="haskell">fixBuz :: Int -> String
+divide8 3 = "Fiz"
+divide8 5 = "Buz"
+divide8 15 = "FizBuz"
+divide8 _ = "Some other number"</code></pre>
+
+          <p data-markdown>
+            Так матчить можно произвольные структуры произвольного уровня вложенности.
+
+            `_` -- специальное название константы, которое говорит что вам все равно что в ней лежит.
+          </p>
+          <aside class="notes" data-markdown>
+            функции объявляются в несколькро строк. Первая -- обьявленик типа функции,
+            а последубщие -- реализация. В общем случае тип можно не указывать, но указывать тип у высказыванй на самом
+            верхнем уровне (не вложенные) считается хорошим тоном и улучшает выведение типов и ошибки компиляции.
+
+            У функции может быть несколько реализаций: какая из них вызовется зависит от значений передаваемых
+            аргументов. матчинг произхводится сверху вниз.
+
+            если в аргемантах написано слово с маленькой буквы, то значение аргумента биндится на эту константу.
+          </aside>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Структуры</h2>
+        </section>
+        <section>
+          <pre><code class="haskell">data Foo = Bar
+foo :: Bar
+foo = Bar</code></pre>
+
+          <p data-markdown>
+            `Foo` -- тип структуры. `Bar` -- конструктор структуры.
+
+            Тут у `Foo` всего одно значение `Bar`.
+          </p>
+        </section>
+        <section>
+          <h3>Произведение типов</h3>
+          <h5>(обычные поля структур)</h5>
+          <aside class="notes" data-markdown>
+            После констрктора можно укзать существующие типы, которые в нем храняться.
+          </aside>
+
+          <pre><code class="haskell">data PersonType = Person String Int</code></pre>
+          <pre><code class="haskell fragment">vasya :: PersonType
+vasya = Person "Vasya" 8
+-- тип можно не укзывать
+petya = Person "Petya" 5</code></pre>
+          <pre><code class="haskell fragment">getName :: PersonType -> String
+getName (Person name _) = name</code></pre>
+          <pre><code class="haskell fragment">greetPerson :: PersonType -> String
+greetPerson p = "Hello, " ++ getName p</code></pre>
+          <pre><code class="haskell fragment">greetPerson petya
+-- "Hello, Petya"</code></pre>
+        </section>
+        <section>
+          <h3>Еще немного функций</h3>
+          <pre><code class="haskell fragment">greetPerson :: PersonType -> String
+greetPerson p = "Hello, " ++ getName p</code></pre>
+
+          <pre><code class="haskell fragment">greetPerson :: PersonType -> String
+greetPerson p = "Hello, " ++ name
+  where
+    name = getName p</code></pre>
+          <pre><code class="haskell fragment">greetPerson :: PersonType -> String
+greetPerson p = "Hello, " ++ name
+  where
+    getName' (Person name _) = name
+    name = getName' p</code></pre>
+        </section>
+        <section>
+          <pre><code class="haskell">data PersonType = Person String Int
+
+getName :: PersonType -> String
+getName (Person name _) = name</code></pre>
+          <pre><code class="haskell fragment">greetName :: String -> String
+greetName name = "Hello, " ++ name</code></pre>
+          <pre><code class="haskell fragment">greetPerson :: PersonType -> String
+greetPerson p = greetName (getName p)</code></pre>
+          <pre><code class="haskell fragment">greetPerson :: PersonType -> String
+greetPerson = greetName . getName</code></pre>
+          <pre><code class="haskell fragment">greetPerson petya
+-- "Hello, Petya"</code></pre>
+          <pre><code class="haskell fragment">(greetName . getName) petya
+-- "Hello, Petya"</code></pre>
+        </section>
+        <section>
+          <h3>Суммы типов</h3>
+          <aside class="notes" data-markdown>
+            Функции нескольких аргументов -- странный синтаксис -- потом расскажу.
+          </aside>
+
+          <pre><code class="haskell fragment">data Bool = False | True</code></pre>
+          <pre><code class="haskell fragment">x :: Bool
+x = True
+y = False</code></pre>
+
+          <pre><code class="haskell fragment">ifThenElse :: (Bool, a, a) -> a</code></pre>
+          <pre><code class="haskell fragment">ifThenElse (True, a, _) = a
+ifThenElse (False, _, b) = b</code></pre>
+          <pre><code class="haskell fragment">ifThenElse (True, "Hello", "World")
+-- "Hello"</code></pre>
+
+          <pre><code class="haskell fragment">ifThenElse (False, "Hello", "World")
+-- "World"</code></pre>
+
+        </section>
+        <section>
+          <pre><code class="haskell">data CircleType = Circle Double Double Double
+data RectangleType = Rectangle Double Double Double Double
+</code></pre>
+          <pre><code class="haskell fragment">data Shape =
+  CircleShape CircleType | RectangleShape RectangleType</code></pre>
+          <pre><code class="haskell fragment">surface :: Shape -> Double</code></pre>
+          <pre><code class="haskell fragment">surface (CircleShape (Circle _ _ r)) =
+  pi * r ^ 2</code></pre>
+          <pre><code class="haskell fragment">surface (RectangleShape (Rectangle x1 y1 x2 y2)) =
+  (abs (x2 - x1)) * (abs (y2 - y1))</code></pre>
+          <pre><code class="haskell fragment">shape = CircleShape (Circle 0 0 2)
+surface shape
+-- 12.566370614359172
+</code></pre>
+          <pre><code class="haskell fragment">otherShape = RectangleShape (Rectangle 1 2 3 4)
+surface otherShape
+-- 4.0
+</code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>И еще немного функций</h2>
+        </section>
+        <section>
+          <h3>Лямбда-выражения</h3>
+
+          <pre><code class="haskell fragment">add8 :: Int -> Int</code></pre>
+          <pre><code class="haskell fragment">add8 x = x + 8</code></pre>
+          <pre><code class="haskell fragment">add8 = \x -> x + 8</code></pre>
+          <p data-markdown class="fragment">
+            λ -- `\`
+
+            (λ печатать тяжело)</p>
+
+          <pre><code class="haskell fragment">foo :: (Int -> Int) -> Int</code></pre>
+          <pre><code class="haskell fragment">foo add8</code></pre>
+          <pre><code class="haskell fragment">foo (\x -> x + 8)</code></pre>
+        </section>
+        <section>
+          <h3>Давайте придумаем синтаксис для функции несколких аргументов!</h3>
+        </section>
+        <section>
+          <pre><code class="haskell">x, y :: Int
+x = 42
+y = 69
+</code></pre>
+
+          <pre><code class="haskell fragment">xPlusY :: Int
+xPlusY = add x y</code></pre>
+          <p class="fragment" data-markdown>Применение функции -- лево-ассоциативно</p>
+          <pre><code class="haskell fragment">xPlusY = (add x) y</code></pre>
+          <pre><code class="haskell fragment">xPlusY = f y
+f = add x</code></pre>
+          <pre><code class="haskell fragment">f :: Int -> Int</code></pre>
+          <pre><code class="haskell fragment">add :: Int -> (Int -> Int)</code></pre>
+        </section>
+        <section>
+          <pre><code class="haskell">add :: Int -> (Int -> Int)</code></pre>
+          <p class="fragment" data-markdown>Тип `->` -- право-ассоциативный</p>
+
+          <pre><code class="haskell fragment">add :: Int -> Int -> Int</code></pre>
+          <pre><code class="haskell fragment">add a b = a + b</code></pre>
+          <pre><code class="haskell fragment">add = \a b -> a + b</code></pre>
+        </section>
+        <section>
+          <p>Любая функция берет строго один аргумент.</p>
+
+          <p>Функция нескольких аргументов все равно берет строго одтн аргумент и возвращает функцию, которая берет
+            следйющий.
+          </p>
+
+          <p>
+            <em>
+              (И из-за того, что применение функции лево-ассоциативно, вызов таких не трубует особого
+              синтаксиса.)
+            </em>
+          </p>
+        </section>
+        <section>
+          <h3>Currying</h3>
+          <pre><code class="haskell fragment">add :: Int -> Int -> Int
+add a b = a + b</code></pre>
+
+          <pre><code class="haskell fragment">add8 :: Int -> Int</code></pre>
+          <pre><code class="haskell fragment">add :: Int -> (Int -> Int)</code></pre>
+          <pre><code class="haskell fragment">add8 = add 8</code></pre>
+          <pre><code class="haskell fragment">add8 3
+-- 11</code></pre>
+        </section>
+        <section>
+          <h3>Funny fact</h3>
+
+          <p class="fragment" data-markdown>Оператор (например `+`) -- функция, название которой не содержит буквы и
+            цифры.</p>
+          <pre><code class="haskell fragment">x +&+ y = x + y</code></pre>
+          <pre><code class="haskell fragment">8 +&+ 9
+-- 17</code></pre>
+
+        </section>
+        <section>
+          <h3>Funny fact 2</h3>
+
+          <p class="fragment" data-markdown>Оператор можно превратить в функцию, окружив его скобками.</p>
+          <pre><code class="haskell fragment">add :: Int -> Int -> Int
+add x y = x + y</code></pre>
+          <pre><code class="haskell fragment">add = (+&+)</code></pre>
+          <pre><code class="haskell fragment">add = (+)</code></pre>
+
+        </section>
+        <section>
+          <h3>Funny fact 3</h3>
+
+          <p class="fragment" data-markdown>Функцию можно превратить в оператор, окружив ее обратными кавычками.</p>
+          <pre><code class="haskell fragment">add :: Int -> Int -> Int
+add x y = x + y</code></pre>
+          <pre><code class="haskell fragment">add 8 9
+-- 17</code></pre>
+          <pre><code class="haskell fragment">8 `add` 9
+-- 17</code></pre>
+        </section>
+      </section>
+      </section>
+      <section>
+        <section>
+          <h2>Список</h2>
+        </section>
+        <section>
+          <h3>Односвязный список</h3>
+          <pre><code class="haskell fragment">data IntList = Cons Int IntList | Nil</code></pre>
+          <pre><code class="haskell fragment">nums :: IntList
+nums = 1 `Cons` (2 `Cons` (3 `Cons` Nil))</code></pre>
+          <pre><code class="haskell fragment">sum :: IntList -> Int</code></pre>
+          <pre><code class="haskell fragment">sum (Cons x xs) = x + sum xs</code></pre>
+          <pre><code class="haskell fragment">sum Nil = 0
+sum (Cons x xs) = x + sum xs</code></pre>
+          <pre><code class="haskell fragment">sum nums
+-- 6</code></pre>
+
+        </section>
+        <section>
+          <pre><code class="haskell">take :: Int -> IntList -> IntList</code></pre>
+          <pre><code class="haskell fragment">take _ Nil = Nil
+take 0 _ = Nil
+take n (Cons x xs) = Cons x (take (n - 1) xs)</code></pre>
+          <pre><code class="haskell fragment">nums :: IntList
+nums = 1 `Cons` (2 `Cons` (3 `Cons` Nil))</code></pre>
+          <pre><code class="haskell fragment">take 2 nums
+-- Cons 1 (Cons 2 Nil)
+take 1029 nums
+-- Cons 1 (Cons 2 (Cons 3 Nil))
+take 0 nums
+-- Nil</code></pre>
+
+        </section>
+        <section>
+          <pre><code class="haskell">repeat :: Int -> IntList</code></pre>
+          <pre><code class="haskell fragment">repeat n = n : (repeat n)</code></pre>
+          <pre><code class="haskell fragment">repeat 8
+-- Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (...</code></pre>
+          <pre><code class="haskell fragment">(take 3 . repeat) 8
+-- Cons 8 (Cons 8 (Cons 8 Nil))</code></pre>
+          <pre><code class="haskell fragment">(sum . take 3 . repeat) 8
+-- 24</code></pre>
+        </section>
+        <section>
+          <table>
+            <tr>
+              <td>Наша самодеятельность</td>
+              <td>В стандартной библиотеке</td>
+            </tr>
+            <tr class="fragment">
+              <td>
+                <pre><code class="haskell">IntList</code></pre>
+              </td>
+              <td>
+                <pre><code class="haskell">[Int]</code></pre>
+              </td>
+            </tr>
+            <tr class="fragment">
+              <td>
+                <pre><code class="haskell">Nil</code></pre>
+              </td>
+              <td>
+                <pre><code class="haskell">[]</code></pre>
+              </td>
+            </tr>
+            <tr class="fragment">
+              <td>
+                <pre><code class="haskell">Cons</code></pre>
+              </td>
+              <td>
+                <pre><code class="haskell">:</code></pre>
+              </td>
+            </tr>
+            <tr class="fragment">
+              <td>
+                <pre><code class="haskell">Cons 3 (Cons 4 Nil)</code></pre>
+              </td>
+              <td>
+                <pre class="fragment"><code class="haskell">3 : 4 : []</code></pre>
+                <pre class="fragment"><code class="haskell">[3, 4]</code></pre>
+              </td>
+            </tr>
+          </table>
+        </section>
+        <section>
+          <p data-markdown>`repeat`, `sum` и `take` тоже есть в стандартной библиотеке.</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>QuickSort</h2>
+        </section>
+        <section>
+          <pre><code class="haskell">quicksort :: [Int] -> [Int]</code></pre>
+
+          <pre><code class="haskell fragment">quicksort (x:xs) =
+  quicksort smaller ++ [x] ++ quicksort larger
+  where
+    smaller = filter (< x) xs
+    larger = filter (>= x) xs</code></pre>
+        </section>
+        <section>
+          <pre><code class="haskell">filter :: (Bool -> Int) -> [Int] -> [Int]</code></pre>
+          <pre><code class="haskell fragment">filter f (x:xs) =
+  if f x
+    then filter f xs
+    else x:(filter f xs)</code></pre>
+          <pre><code class="haskell fragment">filter _ [] = []
+filter f (x:xs) =
+  if f x
+    then filter f xs
+    else x:(filter f xs)</code></pre>
+        </section>
+        <section>
+          <pre><code class="haskell">quicksort :: [Int] -> [Int]
+quicksort (x:xs) =
+  quicksort smaller ++ [x] ++ quicksort larger
+  where
+    smaller = filter (< x) xs
+    larger = filter (>= x) xs
+    filter _ [] = []
+    filter f (x:xs) =
+      if f x
+        then filter f xs
+        else x:(filter f xs)</code></pre>
+        </section>
+        <section>
+          <pre><code class="haskell">quicksort :: [Int] -> [Int]
+quicksort [] = []
+quicksort (x:xs) =
+  quicksort smaller ++ [x] ++ quicksort larger
+  where
+    smaller = filter (< x) xs
+    larger = filter (>= x) xs
+    filter _ [] = []
+    filter f (x:xs) =
+      if f x
+        then filter f xs
+        else x:(filter f xs)</code></pre>
+          <pre><code class="haskell fragment">quicksort [2, 1, 3, 4]
+-- [1, 2, 3, 4]</code></pre>
+        </section>
+        <section>
+          <p data-markdown>`filter` тоже есть в стандартной библиотеке.</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Где и как смотреть "стандартную библиотеку"</h2>
+        </section>
+        <section>
+          <ol>
+            <li>
+              <a href="https://hackage.haskell.org/package/base">Hackage</a>
+
+              <p data-markdown>
+                (Там вам нужен только пакет `base`. Ссылка ведет прямо на него.)
+
+                Еще если там нажать `s`, то будет поиск.
+              </p>
+            </li>
+            <li class="fragment">
+              <a href="https://hoogle.haskell.org">Hoogle</a>
+
+              <p data-markdown>
+                Это поиск по типам.
+
+                Например: `Int -> [Int] -> [Int]`
+
+                (Тут вам опять же нужен только пакет `base`. Нужно чтобы справа было "package:base".)
+
+              </p>
+            </li>
+          </ol>
+        </section>
+      </section>
+    </div>
+  </div>
+
+  <script src="js/reveal.min.js"></script>
+
+  <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+
+      // Display presentation control arrows
+      controls: true,
+
+      // Help the user learn the controls by providing hints, for example by
+      // bouncing the down arrow when they first encounter a vertical slide
+      controlsTutorial: true,
+
+      // Determines where controls appear, "edges" or "bottom-right"
+      controlsLayout: 'bottom-right',
+
+      // Visibility rule for backwards navigation arrows; "faded", "hidden"
+      // or "visible"
+      controlsBackArrows: 'faded',
+
+      // Display a presentation progress bar
+      progress: true,
+
+      // Display the page number of the current slide
+      slideNumber: false,
+
+      // Add the current slide number to the URL hash so that reloading the
+      // page/copying the URL will return you to the same slide
+      hash: true,
+
+      // Push each slide change to the browser history. Implies `hash: true`
+      history: false,
+
+      // Enable keyboard shortcuts for navigation
+      keyboard: true,
+
+      // Enable the slide overview mode
+      overview: true,
+
+      // Vertical centering of slides
+      center: true,
+
+      // Enables touch navigation on devices with touch input
+      touch: true,
+
+      // Loop the presentation
+      loop: false,
+
+      // Change the presentation direction to be RTL
+      rtl: false,
+
+      // See https://github.com/hakimel/reveal.js/#navigation-mode
+      navigationMode: 'linear',
+
+      // Randomizes the order of slides each time the presentation loads
+      shuffle: false,
+
+      // Turns fragments on and off globally
+      fragments: true,
+
+      // Flags whether to include the current fragment in the URL,
+      // so that reloading brings you to the same fragment position
+      fragmentInURL: true,
+
+      // Flags if the presentation is running in an embedded mode,
+      // i.e. contained within a limited portion of the screen
+      embedded: false,
+
+      // Flags if we should show a help overlay when the questionmark
+      // key is pressed
+      help: true,
+
+      // Flags if speaker notes should be visible to all viewers
+      showNotes: false,
+
+      // Global override for autoplaying embedded media (video/audio/iframe)
+      // - null: Media will only autoplay if data-autoplay is present
+      // - true: All media will autoplay, regardless of individual setting
+      // - false: No media will autoplay, regardless of individual setting
+      autoPlayMedia: null,
+
+      // Global override for preloading lazy-loaded iframes
+      // - null: Iframes with data-src AND data-preload will be loaded when within
+      //   the viewDistance, iframes with only data-src will be loaded when visible
+      // - true: All iframes with data-src will be loaded when within the viewDistance
+      // - false: All iframes with data-src will be loaded only when visible
+      preloadIframes: null,
+
+      // Number of milliseconds between automatically proceeding to the
+      // next slide, disabled when set to 0, this value can be overwritten
+      // by using a data-autoslide attribute on your slides
+      autoSlide: 0,
+
+      // Stop auto-sliding after user input
+      autoSlideStoppable: true,
+
+      // Use this method for navigation when auto-sliding
+      autoSlideMethod: Reveal.navigateNext,
+
+      // Specify the average time in seconds that you think you will spend
+      // presenting each slide. This is used to show a pacing timer in the
+      // speaker view
+      defaultTiming: 120,
+
+      // Enable slide navigation via mouse wheel
+      mouseWheel: false,
+
+      // Hide cursor if inactive
+      hideInactiveCursor: true,
+
+      // Time before the cursor is hidden (in ms)
+      hideCursorTime: 5000,
+
+      // Hides the address bar on mobile devices
+      hideAddressBar: true,
+
+      // Opens links in an iframe preview overlay
+      // Add `data-preview-link` and `data-preview-link="false"` to customise each link
+      // individually
+      previewLinks: false,
+
+      // Transition style
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+      // Transition speed
+      transitionSpeed: 'default', // default/fast/slow
+
+      // Transition style for full page slide backgrounds
+      backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+      // Number of slides away from the current that are visible
+      viewDistance: 3,
+
+      // Parallax background image
+      parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+      // Parallax background size
+      parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+      // Number of pixels to move the parallax background per slide
+      // - Calculated automatically unless specified
+      // - Set to 0 to disable movement along an axis
+      parallaxBackgroundHorizontal: null,
+      parallaxBackgroundVertical: null,
+
+      // The display mode that will be used to show slides
+      display: 'block',
+
+      pdfSeparateFragments: false,
+
+      defaultTiming: null,
+
+      markdown: {
+        smartypants: true
+      },
+
+
+      dependencies: [
+        { src: 'plugin/markdown/marked.js' },
+        { src: 'plugin/markdown/markdown.js' },
+        { src: 'plugin/zoom-js/zoom.js', async: true },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true }
+      ]
+
+    });
+  </script>
+</body>
+
+</html>

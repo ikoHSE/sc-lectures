@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'Hasklig';
+    src: url('Hasklig-Regular.eot');
+    src: url('Hasklig-Regular.eot?#iefix') format('embedded-opentype'),
+         url('Hasklig-Regular.woff') format('woff'),
+         url('Hasklig-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hasklig';
+    src: url('Hasklig-It.eot');
+    src: url('Hasklig-It.eot?#iefix') format('embedded-opentype'),
+         url('Hasklig-It.woff') format('woff'),
+         url('Hasklig-It.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Hasklig';
+    src: url('Hasklig-Semibold.eot');
+    src: url('Hasklig-Semibold.eot?#iefix') format('embedded-opentype'),
+         url('Hasklig-Semibold.woff') format('woff'),
+         url('Hasklig-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hasklig';
+    src: url('Hasklig-SemiboldIt.eot');
+    src: url('Hasklig-SemiboldIt.eot?#iefix') format('embedded-opentype'),
+         url('Hasklig-SemiboldIt.woff') format('woff'),
+         url('Hasklig-SemiboldIt.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
