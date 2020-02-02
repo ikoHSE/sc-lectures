@@ -666,6 +666,52 @@
 
 <p><code>filter</code> тоже есть в стандартной библиотеке.</p>
 </section>
+<section id="еще-немного-структур" class="slide level1">
+<h1>Еще немного структур</h1>
+</section>
+<section class="slide level1">
+
+<h2 id="параметрмческий-полиморфизм">Параметрмческий полиморфизм</h2>
+<h3 id="дженерики">(Дженерики)</h3>
+<div class="sourceCode" id="cb123"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb123-1"><a href="#cb123-1"></a><span class="kw">data</span> <span class="dt">IntList</span> <span class="ot">=</span> <span class="dt">Cons</span> <span class="dt">Int</span> <span class="dt">IntList</span> <span class="op">|</span> <span class="dt">Nil</span></span></code></pre></div>
+<aside class="notes">
+<p>Мы научиоись делать список интов. А что если мы хотим сделать просто список. Чего-нибудь.</p>
+</aside>
+<div class="sourceCode" id="cb124"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb124-1"><a href="#cb124-1"></a><span class="kw">data</span> <span class="dt">List</span> a <span class="ot">=</span> <span class="dt">Cons</span> a (<span class="dt">List</span> a) <span class="op">|</span> <span class="dt">Nil</span></span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb125-1"><a href="#cb125-1"></a><span class="ot">ints ::</span> <span class="dt">List</span> <span class="dt">Int</span></span>
+<span id="cb125-2"><a href="#cb125-2"></a>ints <span class="ot">=</span> <span class="dt">Cons</span> <span class="dv">1</span> (<span class="dt">Cons</span> <span class="dv">2</span> (<span class="dt">Cons</span> <span class="dv">3</span> <span class="dt">Nil</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb126-1"><a href="#cb126-1"></a><span class="co">-- Типы как всегда можно не писать</span></span>
+<span id="cb126-2"><a href="#cb126-2"></a><span class="ot">strings ::</span> <span class="dt">List</span> <span class="dt">String</span></span>
+<span id="cb126-3"><a href="#cb126-3"></a>strings <span class="ot">=</span> <span class="dt">Cons</span> <span class="st">&quot;one&quot;</span> (<span class="dt">Cons</span> <span class="st">&quot;two&quot;</span> (<span class="dt">Cons</span> <span class="st">&quot;three&quot;</span> <span class="dt">Nil</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb127-1"><a href="#cb127-1"></a><span class="ot">strings ::</span> <span class="dt">List</span> <span class="dt">String</span></span>
+<span id="cb127-2"><a href="#cb127-2"></a>strings <span class="ot">=</span> <span class="dt">Cons</span> <span class="st">&quot;one&quot;</span> (<span class="dt">Cons</span> <span class="st">&quot;two&quot;</span> (<span class="dt">Cons</span> <span class="st">&quot;three&quot;</span> <span class="dt">Nil</span>))</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb128"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb128-1"><a href="#cb128-1"></a>things <span class="ot">=</span> <span class="dt">Cons</span> (<span class="st">&quot;one&quot;</span><span class="ot"> ::</span> <span class="dt">String</span>) (<span class="dt">Cons</span> (<span class="dv">2</span><span class="ot"> ::</span> <span class="dt">Int</span>) <span class="dt">Nil</span>)</span></code></pre></div>
+<pre class="fragment"><code>    • Couldn&#39;t match type ‘Int’ with ‘String’
+      Expected type: List String
+        Actual type: List Int
+   |
+10 | things = Cons (&quot;one&quot; :: String) (Cons (2 :: Int) Nil)
+   |                                  ^^^^^^^^^^^^^^^^^^^</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb130-1"><a href="#cb130-1"></a><span class="kw">data</span> <span class="dt">List</span> a <span class="ot">=</span> <span class="dt">Cons</span> a (<span class="dt">List</span> a) <span class="op">|</span> <span class="dt">Nil</span></span></code></pre></div>
+<p><span class="fragment"><code>a</code> должен всегда быть <code>a</code>.</span></p>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb131"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb131-1"><a href="#cb131-1"></a><span class="fu">take</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IntList</span> <span class="ot">-&gt;</span> <span class="dt">IntList</span></span>
+<span id="cb131-2"><a href="#cb131-2"></a><span class="fu">take</span> _ <span class="dt">Nil</span> <span class="ot">=</span> <span class="dt">Nil</span></span>
+<span id="cb131-3"><a href="#cb131-3"></a><span class="fu">take</span> <span class="dv">0</span> _ <span class="ot">=</span> <span class="dt">Nil</span></span>
+<span id="cb131-4"><a href="#cb131-4"></a><span class="fu">take</span> n (<span class="dt">Cons</span> x xs) <span class="ot">=</span> <span class="dt">Cons</span> x (<span class="fu">take</span> (n <span class="op">-</span> <span class="dv">1</span>) xs)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb132-1"><a href="#cb132-1"></a><span class="fu">take</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">List</span> a <span class="ot">-&gt;</span> <span class="dt">List</span> a</span>
+<span id="cb132-2"><a href="#cb132-2"></a><span class="fu">take</span> _ <span class="dt">Nil</span> <span class="ot">=</span> <span class="dt">Nil</span></span>
+<span id="cb132-3"><a href="#cb132-3"></a><span class="fu">take</span> <span class="dv">0</span> _ <span class="ot">=</span> <span class="dt">Nil</span></span>
+<span id="cb132-4"><a href="#cb132-4"></a><span class="fu">take</span> n (<span class="dt">Cons</span> x xs) <span class="ot">=</span> <span class="dt">Cons</span> x (<span class="fu">take</span> (n <span class="op">-</span> <span class="dv">1</span>) xs)</span></code></pre></div>
+<aside class="notes">
+<p>Поменялся только тип!</p>
+</aside>
+</section>
 <section id="где-и-как-смотреть-стандартную-библиотеку" class="slide level1">
 <h1>Где и как смотреть “стандартную библиотеку”</h1>
 </section>

@@ -11,3 +11,4 @@
   - Currying
   - Lists
   - Quicksort
+  - Parametric polymorphism in structures
