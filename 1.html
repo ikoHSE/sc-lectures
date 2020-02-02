@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Ilya Kostyuchenko">
+  <title>1</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reset.css">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        background-color: #232629;
+        color: #7a7c7d;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cfcfc2; background-color: #232629; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span. { color: #cfcfc2; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #3f8058; } /* Annotation */
+    code span.at { color: #2980b9; } /* Attribute */
+    code span.bn { color: #f67400; } /* BaseN */
+    code span.bu { color: #7f8c8d; } /* BuiltIn */
+    code span.cf { color: #fdbc4b; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #3daee9; } /* Char */
+    code span.cn { color: #27aeae; font-weight: bold; } /* Constant */
+    code span.co { color: #7a7c7d; } /* Comment */
+    code span.cv { color: #7f8c8d; } /* CommentVar */
+    code span.do { color: #a43340; } /* Documentation */
+    code span.dt { color: #2980b9; } /* DataType */
+    code span.dv { color: #f67400; } /* DecVal */
+    code span.er { color: #da4453; text-decoration: underline; } /* Error */
+    code span.ex { color: #0099ff; font-weight: bold; } /* Extension */
+    code span.fl { color: #f67400; } /* Float */
+    code span.fu { color: #8e44ad; } /* Function */
+    code span.im { color: #27ae60; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #cfcfc2; font-weight: bold; } /* Keyword */
+    code span.op { color: #cfcfc2; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #27ae60; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #3daee9; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #f44f4f; } /* String */
+    code span.va { color: #27aeae; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/superblack.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+  <style>
+  	div.sourceCode {
+  		background-color: transparent;
+  		overflow: auto;
+  		margin: 0em;
+  	}
+
+  	pre.sourceCode {
+  		margin: 8px auto;
+  	}
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="функциональное-программирование" class="slide level1">
+<h1>Функциональное программирование</h1>
+<aside class="notes">
+<p>Функциональное программирование это не про использование map filter reduce. Функциональное программирование это вообще ортогонально к ооп. ИМХО проблема с ООП – наследование (которое тоже ортогонально к ООП) – нет разграничения между абстракцией и реализацией. и вообще обзывание это функциональным программированием – не совсем правильно. то, что мы сейчас будем пытаться сделать – сделать код более переиспользуемым. сделать наши данные максимально тупыми =&gt; переиспользуемыми. пытаться комбинировать слишком умные куски – не получится – слишком сложно. мы хотим сделать простые куски, которые просто комбинировать и еще чтобы компилятор проверял эти наши комбинации на валидность.</p>
+</aside>
+</section>
+<section class="slide level1">
+
+<p>Функциональное программирование:</p>
+<blockquote>
+<p>функции – это тоже данные.</p>
+</blockquote>
+<p><code>Int -&gt; Bool</code> (функция) – ровно такие же данные как и <code>Int</code>. Их также можно складывать в структуры, передавать как аргументы и т. п.</p>
+</section>
+<section id="нотация" class="slide level1">
+<h1>нотация</h1>
+</section>
+<section class="slide level1">
+
+<table width="100%">
+<tr>
+<td>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1"></a>  <span class="dt">int</span> x;</span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="ot">  x ::</span> <span class="dt">Int</span></span></code></pre></div>
+</td>
+</tr>
+<tr class="fragment">
+<td>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="dt">int</span> <span class="fu">f</span>(<span class="dt">int</span> x)</span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a><span class="ot">  f ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+</td>
+</tr>
+<tr class="fragment">
+<td>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1"></a>  <span class="dt">static</span> &lt;T&gt; T <span class="fu">f</span>(T x)</span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a><span class="ot">  f ::</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+</td>
+</tr>
+</table>
+</section>
+<section class="slide level1">
+
+<table width="100%">
+<tr>
+<td>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1"></a>  <span class="dt">static</span> &lt;T&gt; T <span class="fu">f</span>(T x)</span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1"></a><span class="ot">  f ::</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+</td>
+</tr>
+<tr>
+<td class="fragment">
+<div class="sourceCode" id="cb9"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1"></a>  <span class="fu">f</span>(x);</span></code></pre></div>
+</td>
+<td class="fragment">
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1"></a>  f x</span></code></pre></div>
+</td>
+</tr>
+<tr class="fragment">
+<td>
+<div class="sourceCode" id="cb11"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1"></a>  <span class="fu">f</span>(x, y);</span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb12"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1"></a>  f x y</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1"></a>  f x y <span class="ot">=</span> (f x) y</span></code></pre></div>
+</td>
+</td>
+</tr>
+</table>
+<aside class="notes">
+<p>Left-associative Currying</p>
+</aside>
+</section>
+<section class="slide level1">
+
+<table width="100%">
+<tr>
+<td>
+<div class="sourceCode" id="cb14"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1"></a>  <span class="dt">static</span> &lt;T&gt; T <span class="fu">f</span>(T x)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="dt">static</span> &lt;T&gt; T <span class="fu">g</span>(T x)</span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1"></a><span class="ot">  f ::</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="ot">  g ::</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+</td>
+</tr>
+<tr>
+<td class="fragment">
+<div class="sourceCode" id="cb16"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb16-1"><a href="#cb16-1"></a>  <span class="fu">f</span>(<span class="fu">g</span>(x));</span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">g</span>(<span class="fu">f</span>(x));</span></code></pre></div>
+</td>
+<td class="fragment">
+<div class="sourceCode" id="cb17"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1"></a>  f (g x)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  g (f x)</span></code></pre></div>
+</td>
+</tr>
+</table>
+</section>
+<section id="композиция" class="slide level1">
+<h1>Композиция</h1>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1"></a><span class="ot">f ::</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="ot">g ::</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1"></a>f (g x)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1"></a>(f <span class="op">.</span> g) x <span class="op">==</span> f (g x)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1"></a>h <span class="ot">=</span> f <span class="op">.</span> g</span>
+<span id="cb21-2"><a href="#cb21-2"></a>h x <span class="op">==</span> f (g x)</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb22"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb22-1"><a href="#cb22-1"></a><span class="ot">f ::</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="ot">g ::</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb23-1"><a href="#cb23-1"></a><span class="ot">h ::</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb23-2"><a href="#cb23-2"></a>h <span class="ot">=</span> f <span class="op">.</span> g</span></code></pre></div>
+<h3 class="fragment" id="моноид" class="fragment">моноид</h3>
+<aside class="notes">
+<p>моноид – у тебя есть две штуки одного типа и ты можешь получить еще одну штуку такого же типа. Это очень простой способ рождения сложности из простоты причем тип h выводится из определения. Нам его указывать не надо. если у нас изначальные маленькие кусочки хорошо описаны, то порожденные большие кусочки будут автоматически хорошо описанными.</p>
+</aside>
+</section>
+<section class="slide level1">
+
+<h2 id="моноид-1">Моноид</h2>
+<p><span class="fragment">Бинарная асоциативная операция</span></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb24-1"><a href="#cb24-1"></a><span class="ot">(.) ::</span> (a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> a)</span></code></pre></div>
+<p><span class="fragment">Нейтральный элемент</span></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">id</span><span class="ot"> ::</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">id</span> x <span class="ot">=</span> x</span></code></pre></div>
+</section>
+<section id="haskell" class="slide level1">
+<h1>Haskell</h1>
+</section>
+<section class="slide level1">
+
+<h3 id="чисто-функционаьлный">Чисто функционаьлный</h3>
+<p>Все что функция может сделать – посмотреть на свои аргументы это вернуть значение.</p>
+<aside class="notes">
+<p>Нельзя просто произвольно распечатать строку в консоль, нельзя просто произвольно отправить запрос на бд, нельзя просто произвольно изменить глобальную переменную.</p>
+</aside>
+</section>
+<section class="slide level1">
+
+<h3 id="referential-transparency">Referential transparency</h3>
+<h5 id="любую-константу-можно-заменить-на-само-значение">(Любую константу можно заменить на само значение)</h5>
+<div class="sourceCode" id="cb26"><pre class="sourceCode java fragment"><code class="sourceCode java"><span id="cb26-1"><a href="#cb26-1"></a><span class="dt">int</span> x = <span class="dv">8</span>;</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="dt">int</span> y = x++;</span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(y + <span class="st">&quot; might be the same as &quot;</span> + y);</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode java fragment"><code class="sourceCode java"><span id="cb27-1"><a href="#cb27-1"></a><span class="dt">int</span> x = <span class="dv">8</span>;</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(x++ + <span class="st">&quot; might be the same as &quot;</span> + x++);</span></code></pre></div>
+<aside class="notes">
+<p>Сильно упрощает рефакторинг и понимание кода.</p>
+</aside>
+</section>
+<section class="slide level1">
+
+<h3 id="нет-переменных-циклов-и-условных-переходов">Нет переменных, циклов и условных переходов</h3>
+<p><span class="fragment">Зато есть константы и нормальная рекурсия (А переходов вообще нет)</span></p>
+</section>
+<section class="slide level1">
+
+<h3 id="очень-ленивый">Очень ленивый</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1"></a>xs <span class="ot">=</span> [<span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>]</span>
+<span id="cb28-2"><a href="#cb28-2"></a>xs&#39; <span class="ot">=</span> <span class="fu">sort</span> xs</span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="fu">print</span> xs</span></code></pre></div>
+<div class="fragment">
+<p><code>xs'</code> не нужен чтобы распечатать <code>xs</code>, поэтому сортироваться ничто не будет. (Зачем делать то, что можно не делать)</p>
+</div>
+</section>
+<section class="slide level1">
+
+<p>Если хотите быстро и просто потыкаться, тут есть интерктивная штука:</p>
+<p><a href="https://www.haskell.org">haskell.org</a></p>
+</section>
+<section id="синтаксис" class="slide level1">
+<h1>Синтаксис</h1>
+</section>
+<section id="функции" class="slide level1">
+<h1>Функции</h1>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb29"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb29-1"><a href="#cb29-1"></a><span class="ot">add2 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>add2 x <span class="ot">=</span> x <span class="op">+</span> <span class="dv">2</span></span></code></pre></div>
+<p>Все функции и константы всегда обозначаются словами с маленькой буквы без пробелов.</p>
+<p>(Константы это просто функции с нулем аргументов.)</p>
+</section>
+<section class="slide level1">
+
+<h2 id="pattern-mathcing">Pattern mathcing</h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb30-1"><a href="#cb30-1"></a><span class="ot">fixBuz ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>divide8 <span class="dv">3</span> <span class="ot">=</span> <span class="st">&quot;Fiz&quot;</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>divide8 <span class="dv">5</span> <span class="ot">=</span> <span class="st">&quot;Buz&quot;</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>divide8 <span class="dv">15</span> <span class="ot">=</span> <span class="st">&quot;FizBuz&quot;</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a>divide8 _ <span class="ot">=</span> <span class="st">&quot;Some other number&quot;</span></span></code></pre></div>
+<p>Так матчить можно произвольные структуры произвольного уровня вложенности.</p>
+<p><code>_</code> – специальное название константы, которое говорит что вам все равно что в ней лежит.</p>
+<aside class="notes">
+<p>функции объявляются в несколькро строк. Первая – обьявленик типа функции, а последубщие – реализация. В общем случае тип можно не указывать, но указывать тип у высказыванй на самом верхнем уровне (не вложенные) считается хорошим тоном и улучшает выведение типов и ошибки компиляции. У функции может быть несколько реализаций: какая из них вызовется зависит от значений передаваемых аргументов. матчинг произхводится сверху вниз. если в аргемантах написано слово с маленькой буквы, то значение аргумента биндится на эту константу.</p>
+</aside>
+</section>
+<section class="slide level1">
+
+<h2 id="структуры">Структуры</h2>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb31"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">data</span> <span class="dt">Foo</span> <span class="ot">=</span> <span class="dt">Bar</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="ot">foo ::</span> <span class="dt">Bar</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>foo <span class="ot">=</span> <span class="dt">Bar</span></span></code></pre></div>
+<p><code>Foo</code> – тип структуры. <code>Bar</code> – конструктор структуры.</p>
+<p>Тут у <code>Foo</code> всего одно значение <code>Bar</code>.</p>
+</section>
+<section class="slide level1">
+
+<h2 id="произведение-типов">Произведение типов</h2>
+<h5 id="обычные-поля-структур">(обычные поля структур)</h5>
+<aside class="notes">
+<p>После констрктора можно укзать существующие типы, которые в нем храняться.</p>
+</aside>
+<div class="sourceCode" id="cb32"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">data</span> <span class="dt">PersonType</span> <span class="ot">=</span> <span class="dt">Person</span> <span class="dt">String</span> <span class="dt">Int</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb33-1"><a href="#cb33-1"></a><span class="ot">vasya ::</span> <span class="dt">PersonType</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>vasya <span class="ot">=</span> <span class="dt">Person</span> <span class="st">&quot;Vasya&quot;</span> <span class="dv">8</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="co">-- тип можно не укзывать</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a>petya <span class="ot">=</span> <span class="dt">Person</span> <span class="st">&quot;Petya&quot;</span> <span class="dv">5</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb34-1"><a href="#cb34-1"></a><span class="ot">getName ::</span> <span class="dt">PersonType</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>getName (<span class="dt">Person</span> name _) <span class="ot">=</span> name</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb35-1"><a href="#cb35-1"></a><span class="ot">greetPerson ::</span> <span class="dt">PersonType</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>greetPerson p <span class="ot">=</span> <span class="st">&quot;Hello, &quot;</span> <span class="op">++</span> getName p</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb36-1"><a href="#cb36-1"></a>greetPerson petya</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="co">-- &quot;Hello, Petya&quot;</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h2 id="еще-немного-функций">Еще немного функций</h2>
+<div class="sourceCode" id="cb37"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb37-1"><a href="#cb37-1"></a><span class="ot">greetPerson ::</span> <span class="dt">PersonType</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>greetPerson p <span class="ot">=</span> <span class="st">&quot;Hello, &quot;</span> <span class="op">++</span> getName p</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb38-1"><a href="#cb38-1"></a><span class="ot">greetPerson ::</span> <span class="dt">PersonType</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>greetPerson p <span class="ot">=</span> <span class="st">&quot;Hello, &quot;</span> <span class="op">++</span> name</span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="kw">where</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>    name <span class="ot">=</span> getName p</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb39-1"><a href="#cb39-1"></a><span class="ot">greetPerson ::</span> <span class="dt">PersonType</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>greetPerson p <span class="ot">=</span> <span class="st">&quot;Hello, &quot;</span> <span class="op">++</span> name</span>
+<span id="cb39-3"><a href="#cb39-3"></a>  <span class="kw">where</span></span>
+<span id="cb39-4"><a href="#cb39-4"></a>    getName&#39; (<span class="dt">Person</span> name _) <span class="ot">=</span> name</span>
+<span id="cb39-5"><a href="#cb39-5"></a>    name <span class="ot">=</span> getName&#39; p</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb40"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">data</span> <span class="dt">PersonType</span> <span class="ot">=</span> <span class="dt">Person</span> <span class="dt">String</span> <span class="dt">Int</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="ot">getName ::</span> <span class="dt">PersonType</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>getName (<span class="dt">Person</span> name _) <span class="ot">=</span> name</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb41-1"><a href="#cb41-1"></a><span class="ot">greetName ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>greetName name <span class="ot">=</span> <span class="st">&quot;Hello, &quot;</span> <span class="op">++</span> name</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb42-1"><a href="#cb42-1"></a><span class="ot">greetPerson ::</span> <span class="dt">PersonType</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a>greetPerson p <span class="ot">=</span> greetName (getName p)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb43-1"><a href="#cb43-1"></a><span class="ot">greetPerson ::</span> <span class="dt">PersonType</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>greetPerson <span class="ot">=</span> greetName <span class="op">.</span> getName</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb44-1"><a href="#cb44-1"></a>greetPerson petya</span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="co">-- &quot;Hello, Petya&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb45-1"><a href="#cb45-1"></a>(greetName <span class="op">.</span> getName) petya</span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="co">-- &quot;Hello, Petya&quot;</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h2 id="суммы-типов">Суммы типов</h2>
+<aside class="notes">
+<p>Функции нескольких аргументов – странный синтаксис – потом расскажу. А пока используем тюпли!</p>
+</aside>
+<div class="sourceCode" id="cb46"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb46-1"><a href="#cb46-1"></a><span class="kw">data</span> <span class="dt">Bool</span> <span class="ot">=</span> <span class="dt">False</span> <span class="op">|</span> <span class="dt">True</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb47-1"><a href="#cb47-1"></a><span class="ot">x ::</span> <span class="dt">Bool</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>x <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a>y <span class="ot">=</span> <span class="dt">False</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb48-1"><a href="#cb48-1"></a><span class="ot">ifThenElse ::</span> (<span class="dt">Bool</span>, a, a) <span class="ot">-&gt;</span> a</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb49-1"><a href="#cb49-1"></a>ifThenElse (<span class="dt">True</span>, a, _) <span class="ot">=</span> a</span>
+<span id="cb49-2"><a href="#cb49-2"></a>ifThenElse (<span class="dt">False</span>, _, b) <span class="ot">=</span> b</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb50-1"><a href="#cb50-1"></a>ifThenElse (<span class="dt">True</span>, <span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;World&quot;</span>)</span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="co">-- &quot;Hello&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb51-1"><a href="#cb51-1"></a>ifThenElse (<span class="dt">False</span>, <span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;World&quot;</span>)</span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="co">-- &quot;World&quot;</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb52"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb52-1"><a href="#cb52-1"></a><span class="kw">data</span> <span class="dt">CircleType</span> <span class="ot">=</span> <span class="dt">Circle</span> <span class="dt">Double</span> <span class="dt">Double</span> <span class="dt">Double</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="kw">data</span> <span class="dt">RectangleType</span> <span class="ot">=</span> <span class="dt">Rectangle</span> <span class="dt">Double</span> <span class="dt">Double</span> <span class="dt">Double</span> <span class="dt">Double</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb53-1"><a href="#cb53-1"></a><span class="kw">data</span> <span class="dt">Shape</span> <span class="ot">=</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a>  <span class="dt">CircleShape</span> <span class="dt">CircleType</span> <span class="op">|</span> <span class="dt">RectangleShape</span> <span class="dt">RectangleType</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb54-1"><a href="#cb54-1"></a><span class="ot">surface ::</span> <span class="dt">Shape</span> <span class="ot">-&gt;</span> <span class="dt">Double</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb55-1"><a href="#cb55-1"></a>surface (<span class="dt">CircleShape</span> (<span class="dt">Circle</span> _ _ r)) <span class="ot">=</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">pi</span> <span class="op">*</span> r <span class="op">^</span> <span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb56-1"><a href="#cb56-1"></a>surface (<span class="dt">RectangleShape</span> (<span class="dt">Rectangle</span> x1 y1 x2 y2)) <span class="ot">=</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a>  (<span class="fu">abs</span> (x2 <span class="op">-</span> x1)) <span class="op">*</span> (<span class="fu">abs</span> (y2 <span class="op">-</span> y1))</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb57-1"><a href="#cb57-1"></a>shape <span class="ot">=</span> <span class="dt">CircleShape</span> (<span class="dt">Circle</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">2</span>)</span>
+<span id="cb57-2"><a href="#cb57-2"></a>surface shape</span>
+<span id="cb57-3"><a href="#cb57-3"></a><span class="co">-- 12.566370614359172</span></span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb58-1"><a href="#cb58-1"></a>otherShape <span class="ot">=</span> <span class="dt">RectangleShape</span> (<span class="dt">Rectangle</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span>)</span>
+<span id="cb58-2"><a href="#cb58-2"></a>surface otherShape</span>
+<span id="cb58-3"><a href="#cb58-3"></a><span class="co">-- 4.0</span></span></code></pre></div>
+</section>
+<section id="и-еще-немного-функций" class="slide level1">
+<h1>И еще немного функций</h1>
+</section>
+<section class="slide level1">
+
+<h2 id="лямбда-выражения">Лямбда-выражения</h2>
+<div class="sourceCode" id="cb59"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb59-1"><a href="#cb59-1"></a><span class="ot">add8 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb60-1"><a href="#cb60-1"></a>add8 x <span class="ot">=</span> x <span class="op">+</span> <span class="dv">8</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb61-1"><a href="#cb61-1"></a>add8 <span class="ot">=</span> \x <span class="ot">-&gt;</span> x <span class="op">+</span> <span class="dv">8</span></span></code></pre></div>
+<p><span class="fragment">λ – <code>\</code> (λ печатать тяжело)</span></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb62-1"><a href="#cb62-1"></a><span class="ot">foo ::</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>) <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb63-1"><a href="#cb63-1"></a>foo add8</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb64-1"><a href="#cb64-1"></a>foo (\x <span class="ot">-&gt;</span> x <span class="op">+</span> <span class="dv">8</span>)</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h3 id="давайте-придумаем-синтаксис-для-функции-нескольких-аргументов">Давайте придумаем синтаксис для функции нескольких аргументов!</h3>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb65"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb65-1"><a href="#cb65-1"></a>x,<span class="ot"> y ::</span> <span class="dt">Int</span></span>
+<span id="cb65-2"><a href="#cb65-2"></a>x <span class="ot">=</span> <span class="dv">42</span></span>
+<span id="cb65-3"><a href="#cb65-3"></a>y <span class="ot">=</span> <span class="dv">69</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb66-1"><a href="#cb66-1"></a><span class="ot">xPlusY ::</span> <span class="dt">Int</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a>xPlusY <span class="ot">=</span> add x y</span></code></pre></div>
+<p><span class="fragment">Применение функции – лево-ассоциативно</span></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb67-1"><a href="#cb67-1"></a>xPlusY <span class="ot">=</span> (add x) y</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb68-1"><a href="#cb68-1"></a>xPlusY <span class="ot">=</span> f y</span>
+<span id="cb68-2"><a href="#cb68-2"></a>f <span class="ot">=</span> add x</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb69-1"><a href="#cb69-1"></a><span class="ot">f ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb70-1"><a href="#cb70-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>)</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb71"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb71-1"><a href="#cb71-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>)</span></code></pre></div>
+<p><span class="fragment">Тип <code>-&gt;</code> – право-ассоциативный</span></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb72-1"><a href="#cb72-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb73-1"><a href="#cb73-1"></a>add a b <span class="ot">=</span> a <span class="op">+</span> b</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb74-1"><a href="#cb74-1"></a>add <span class="ot">=</span> \a b <span class="ot">-&gt;</span> a <span class="op">+</span> b</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<p>Любая функция берет строго один аргумент.</p>
+<p>Функция нескольких аргументов все равно берет строго одтн аргумент и возвращает функцию, которая берет следйющий.</p>
+<p><em>(И из-за того, что применение функции лево-ассоциативно, вызов таких не трубует особого синтаксиса.)</em></p>
+</section>
+<section class="slide level1">
+
+<h3 id="currying">Currying</h3>
+<div class="sourceCode" id="cb75"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb75-1"><a href="#cb75-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb75-2"><a href="#cb75-2"></a>add a b <span class="ot">=</span> a <span class="op">+</span> b</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb76-1"><a href="#cb76-1"></a><span class="ot">add8 ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb77-1"><a href="#cb77-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb78-1"><a href="#cb78-1"></a>add8 <span class="ot">=</span> add <span class="dv">8</span></span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb79-1"><a href="#cb79-1"></a>add8 <span class="dv">3</span></span>
+<span id="cb79-2"><a href="#cb79-2"></a><span class="co">-- 11</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h3 id="funny-fact">Funny fact</h3>
+<p><span class="fragment">Оператор (например <code>+</code>) – функция, название которой не содержит буквы и цифры.</span></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb80-1"><a href="#cb80-1"></a>x <span class="op">+&amp;+</span> y <span class="ot">=</span> x <span class="op">+</span> y</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb81-1"><a href="#cb81-1"></a><span class="dv">8</span> <span class="op">+&amp;+</span> <span class="dv">9</span></span>
+<span id="cb81-2"><a href="#cb81-2"></a><span class="co">-- 17</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h3 id="funny-fact-2">Funny fact 2</h3>
+<p><span class="fragment">Оператор можно превратить в функцию, окружив его скобками.</span></p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb82-1"><a href="#cb82-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb82-2"><a href="#cb82-2"></a>add x y <span class="ot">=</span> x <span class="op">+</span> y</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb83-1"><a href="#cb83-1"></a>add <span class="ot">=</span> (<span class="op">+&amp;+</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb84-1"><a href="#cb84-1"></a>add <span class="ot">=</span> (<span class="op">+</span>)</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<h3 id="funny-fact-3">Funny fact 3</h3>
+<p><span class="fragment">Функцию можно превратить в оператор, окружив ее обратными кавычками.</span></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb85-1"><a href="#cb85-1"></a><span class="ot">add ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span>
+<span id="cb85-2"><a href="#cb85-2"></a>add x y <span class="ot">=</span> x <span class="op">+</span> y</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb86-1"><a href="#cb86-1"></a>add <span class="dv">8</span> <span class="dv">9</span></span>
+<span id="cb86-2"><a href="#cb86-2"></a><span class="co">-- 17</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb87-1"><a href="#cb87-1"></a><span class="dv">8</span> <span class="ot">`add`</span> <span class="dv">9</span></span>
+<span id="cb87-2"><a href="#cb87-2"></a><span class="co">-- 17</span></span></code></pre></div>
+</section>
+<section id="список" class="slide level1">
+<h1>Список</h1>
+</section>
+<section class="slide level1">
+
+<h3 id="односвязный-список">Односвязный список</h3>
+<div class="sourceCode" id="cb88"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb88-1"><a href="#cb88-1"></a><span class="kw">data</span> <span class="dt">IntList</span> <span class="ot">=</span> <span class="dt">Cons</span> <span class="dt">Int</span> <span class="dt">IntList</span> <span class="op">|</span> <span class="dt">Nil</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb89-1"><a href="#cb89-1"></a><span class="dt">Cons</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IntList</span> <span class="ot">-&gt;</span> <span class="dt">IntList</span></span>
+<span id="cb89-2"><a href="#cb89-2"></a><span class="dt">Nil</span><span class="ot"> ::</span> <span class="dt">IntList</span></span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb90-1"><a href="#cb90-1"></a><span class="ot">nums ::</span> <span class="dt">IntList</span></span>
+<span id="cb90-2"><a href="#cb90-2"></a>nums <span class="ot">=</span> <span class="dv">1</span> <span class="ot">`Cons`</span> (<span class="dv">2</span> <span class="ot">`Cons`</span> (<span class="dv">3</span> <span class="ot">`Cons`</span> <span class="dt">Nil</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb91-1"><a href="#cb91-1"></a><span class="fu">sum</span><span class="ot"> ::</span> <span class="dt">IntList</span> <span class="ot">-&gt;</span> <span class="dt">Int</span></span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb92-1"><a href="#cb92-1"></a><span class="fu">sum</span> (<span class="dt">Cons</span> x xs) <span class="ot">=</span> x <span class="op">+</span> <span class="fu">sum</span> xs</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb93-1"><a href="#cb93-1"></a><span class="fu">sum</span> <span class="dt">Nil</span> <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb93-2"><a href="#cb93-2"></a><span class="fu">sum</span> (<span class="dt">Cons</span> x xs) <span class="ot">=</span> x <span class="op">+</span> <span class="fu">sum</span> xs</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb94-1"><a href="#cb94-1"></a><span class="fu">sum</span> nums</span>
+<span id="cb94-2"><a href="#cb94-2"></a><span class="co">-- 6</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb95"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb95-1"><a href="#cb95-1"></a><span class="fu">take</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IntList</span> <span class="ot">-&gt;</span> <span class="dt">IntList</span></span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb96-1"><a href="#cb96-1"></a><span class="fu">take</span> _ <span class="dt">Nil</span> <span class="ot">=</span> <span class="dt">Nil</span></span>
+<span id="cb96-2"><a href="#cb96-2"></a><span class="fu">take</span> <span class="dv">0</span> _ <span class="ot">=</span> <span class="dt">Nil</span></span>
+<span id="cb96-3"><a href="#cb96-3"></a><span class="fu">take</span> n (<span class="dt">Cons</span> x xs) <span class="ot">=</span> <span class="dt">Cons</span> x (<span class="fu">take</span> (n <span class="op">-</span> <span class="dv">1</span>) xs)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb97-1"><a href="#cb97-1"></a><span class="ot">nums ::</span> <span class="dt">IntList</span></span>
+<span id="cb97-2"><a href="#cb97-2"></a>nums <span class="ot">=</span> <span class="dv">1</span> <span class="ot">`Cons`</span> (<span class="dv">2</span> <span class="ot">`Cons`</span> (<span class="dv">3</span> <span class="ot">`Cons`</span> <span class="dt">Nil</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">take</span> <span class="dv">2</span> nums</span>
+<span id="cb98-2"><a href="#cb98-2"></a><span class="co">-- Cons 1 (Cons 2 Nil)</span></span>
+<span id="cb98-3"><a href="#cb98-3"></a><span class="fu">take</span> <span class="dv">1029</span> nums</span>
+<span id="cb98-4"><a href="#cb98-4"></a><span class="co">-- Cons 1 (Cons 2 (Cons 3 Nil))</span></span>
+<span id="cb98-5"><a href="#cb98-5"></a><span class="fu">take</span> <span class="dv">0</span> nums</span>
+<span id="cb98-6"><a href="#cb98-6"></a><span class="co">-- Nil</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb99"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb99-1"><a href="#cb99-1"></a><span class="fu">repeat</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">IntList</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb100-1"><a href="#cb100-1"></a><span class="fu">repeat</span> n <span class="ot">=</span> <span class="dt">Cons</span> n (<span class="fu">repeat</span> n)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">repeat</span> <span class="dv">8</span></span>
+<span id="cb101-2"><a href="#cb101-2"></a><span class="co">-- Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (Cons 8 (...</span></span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb102-1"><a href="#cb102-1"></a>(<span class="fu">take</span> <span class="dv">3</span> <span class="op">.</span> <span class="fu">repeat</span>) <span class="dv">8</span></span>
+<span id="cb102-2"><a href="#cb102-2"></a><span class="co">-- Cons 8 (Cons 8 (Cons 8 Nil))</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb103-1"><a href="#cb103-1"></a>(<span class="fu">sum</span> <span class="op">.</span> <span class="fu">take</span> <span class="dv">3</span> <span class="op">.</span> <span class="fu">repeat</span>) <span class="dv">8</span></span>
+<span id="cb103-2"><a href="#cb103-2"></a><span class="co">-- 24</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<table width="100%">
+<tr>
+<td>
+Наша самодеятельность
+</td>
+<td>
+В стандартной библиотеке
+</td>
+</tr>
+<tr class="fragment">
+<td>
+<div class="sourceCode" id="cb104"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb104-1"><a href="#cb104-1"></a>  <span class="dt">IntList</span></span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb105"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb105-1"><a href="#cb105-1"></a>  [<span class="dt">Int</span>]</span></code></pre></div>
+</td>
+</tr>
+<tr class="fragment">
+<td>
+<div class="sourceCode" id="cb106"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb106-1"><a href="#cb106-1"></a>  <span class="dt">IntList</span></span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb107"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb107-1"><a href="#cb107-1"></a>  [<span class="dt">Int</span>]</span></code></pre></div>
+</td>
+</tr>
+<tr class="fragment">
+<td>
+<div class="sourceCode" id="cb108"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb108-1"><a href="#cb108-1"></a>  <span class="dt">Nil</span></span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb109"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb109-1"><a href="#cb109-1"></a>  []</span></code></pre></div>
+</td>
+</tr>
+<tr class="fragment">
+<td>
+<div class="sourceCode" id="cb110"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb110-1"><a href="#cb110-1"></a>  <span class="dt">Cons</span></span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb111"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb111-1"><a href="#cb111-1"></a>  <span class="op">:</span></span></code></pre></div>
+</td>
+</tr>
+<tr class="fragment">
+<td>
+<div class="sourceCode" id="cb112"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb112-1"><a href="#cb112-1"></a>  <span class="dt">Cons</span> <span class="dv">3</span> (<span class="dt">Cons</span> <span class="dv">4</span> <span class="dt">Nil</span>)</span></code></pre></div>
+</td>
+<td>
+<div class="sourceCode" id="cb113"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb113-1"><a href="#cb113-1"></a>  <span class="dv">3</span> <span class="op">:</span> <span class="dv">4</span> <span class="op">:</span> []</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode fragment haskell"><code class="sourceCode haskell"><span id="cb114-1"><a href="#cb114-1"></a>  [<span class="dv">3</span>, <span class="dv">4</span>]</span></code></pre></div>
+</td>
+</tr>
+</table>
+</section>
+<section class="slide level1">
+
+<p><code>repeat</code>, <code>sum</code> и <code>take</code> тоже есть в стандартной библиотеке.</p>
+</section>
+<section id="quicksort" class="slide level1">
+<h1>QuickSort</h1>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb115"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb115-1"><a href="#cb115-1"></a><span class="ot">quicksort ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb116-1"><a href="#cb116-1"></a>quicksort (x<span class="op">:</span>xs) <span class="ot">=</span></span>
+<span id="cb116-2"><a href="#cb116-2"></a>  quicksort smaller <span class="op">++</span> [x] <span class="op">++</span> quicksort larger</span>
+<span id="cb116-3"><a href="#cb116-3"></a>  <span class="kw">where</span></span>
+<span id="cb116-4"><a href="#cb116-4"></a>    smaller <span class="ot">=</span> <span class="fu">filter</span> (<span class="op">&lt;</span> x) xs</span>
+<span id="cb116-5"><a href="#cb116-5"></a>    larger <span class="ot">=</span> <span class="fu">filter</span> (<span class="op">&gt;=</span> x) xs</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb117"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">filter</span><span class="ot"> ::</span> (<span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>) <span class="ot">-&gt;</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">filter</span> f (x<span class="op">:</span>xs) <span class="ot">=</span></span>
+<span id="cb118-2"><a href="#cb118-2"></a>  <span class="kw">if</span> f x</span>
+<span id="cb118-3"><a href="#cb118-3"></a>    <span class="kw">then</span> <span class="fu">filter</span> f xs</span>
+<span id="cb118-4"><a href="#cb118-4"></a>    <span class="kw">else</span> x<span class="op">:</span>(<span class="fu">filter</span> f xs)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">filter</span> _ [] <span class="ot">=</span> []</span>
+<span id="cb119-2"><a href="#cb119-2"></a><span class="fu">filter</span> f (x<span class="op">:</span>xs) <span class="ot">=</span></span>
+<span id="cb119-3"><a href="#cb119-3"></a>  <span class="kw">if</span> f x</span>
+<span id="cb119-4"><a href="#cb119-4"></a>    <span class="kw">then</span> <span class="fu">filter</span> f xs</span>
+<span id="cb119-5"><a href="#cb119-5"></a>    <span class="kw">else</span> x<span class="op">:</span>(<span class="fu">filter</span> f xs)</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb120"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb120-1"><a href="#cb120-1"></a><span class="ot">quicksort ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb120-2"><a href="#cb120-2"></a>quicksort (x<span class="op">:</span>xs) <span class="ot">=</span></span>
+<span id="cb120-3"><a href="#cb120-3"></a>  quicksort smaller <span class="op">++</span> [x] <span class="op">++</span> quicksort larger</span>
+<span id="cb120-4"><a href="#cb120-4"></a>  <span class="kw">where</span></span>
+<span id="cb120-5"><a href="#cb120-5"></a>    smaller <span class="ot">=</span> <span class="fu">filter</span> (<span class="op">&lt;</span> x) xs</span>
+<span id="cb120-6"><a href="#cb120-6"></a>    larger <span class="ot">=</span> <span class="fu">filter</span> (<span class="op">&gt;=</span> x) xs</span>
+<span id="cb120-7"><a href="#cb120-7"></a>    <span class="fu">filter</span> _ [] <span class="ot">=</span> []</span>
+<span id="cb120-8"><a href="#cb120-8"></a>    <span class="fu">filter</span> f (x<span class="op">:</span>xs) <span class="ot">=</span></span>
+<span id="cb120-9"><a href="#cb120-9"></a>      <span class="kw">if</span> f x</span>
+<span id="cb120-10"><a href="#cb120-10"></a>        <span class="kw">then</span> <span class="fu">filter</span> f xs</span>
+<span id="cb120-11"><a href="#cb120-11"></a>        <span class="kw">else</span> x<span class="op">:</span>(<span class="fu">filter</span> f xs)</span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<div class="sourceCode" id="cb121"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb121-1"><a href="#cb121-1"></a><span class="ot">quicksort ::</span> [<span class="dt">Int</span>] <span class="ot">-&gt;</span> [<span class="dt">Int</span>]</span>
+<span id="cb121-2"><a href="#cb121-2"></a>quicksort [] <span class="ot">=</span> []</span>
+<span id="cb121-3"><a href="#cb121-3"></a>quicksort (x<span class="op">:</span>xs) <span class="ot">=</span></span>
+<span id="cb121-4"><a href="#cb121-4"></a>  quicksort smaller <span class="op">++</span> [x] <span class="op">++</span> quicksort larger</span>
+<span id="cb121-5"><a href="#cb121-5"></a>  <span class="kw">where</span></span>
+<span id="cb121-6"><a href="#cb121-6"></a>    smaller <span class="ot">=</span> <span class="fu">filter</span> (<span class="op">&lt;</span> x) xs</span>
+<span id="cb121-7"><a href="#cb121-7"></a>    larger <span class="ot">=</span> <span class="fu">filter</span> (<span class="op">&gt;=</span> x) xs</span>
+<span id="cb121-8"><a href="#cb121-8"></a>    <span class="fu">filter</span> _ [] <span class="ot">=</span> []</span>
+<span id="cb121-9"><a href="#cb121-9"></a>    <span class="fu">filter</span> f (x<span class="op">:</span>xs) <span class="ot">=</span></span>
+<span id="cb121-10"><a href="#cb121-10"></a>      <span class="kw">if</span> f x</span>
+<span id="cb121-11"><a href="#cb121-11"></a>        <span class="kw">then</span> <span class="fu">filter</span> f xs</span>
+<span id="cb121-12"><a href="#cb121-12"></a>        <span class="kw">else</span> x<span class="op">:</span>(<span class="fu">filter</span> f xs)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb122-1"><a href="#cb122-1"></a>quicksort [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>]</span>
+<span id="cb122-2"><a href="#cb122-2"></a><span class="co">-- [1, 2, 3, 4]</span></span></code></pre></div>
+</section>
+<section class="slide level1">
+
+<p><code>filter</code> тоже есть в стандартной библиотеке.</p>
+</section>
+<section id="где-и-как-смотреть-стандартную-библиотеку" class="slide level1">
+<h1>Где и как смотреть “стандартную библиотеку”</h1>
+</section>
+<section class="slide level1">
+
+<ol type="1">
+<li class="fragment"><p><a href="https://hackage.haskell.org/package/base">Hackage</a></p>
+<p>(Там вам нужен только пакет <code>base</code>. Ссылка ведет прямо на него.) Еще если там нажать <code>s</code>, то будет поиск.</p></li>
+<li class="fragment"><p><a href="https://hoogle.haskell.org">Hoogle</a></p>
+<p>Это поиск по типам. Например: <code>Int -&gt; [Int] -&gt; [Int]</code> (Тут вам опять же нужен только пакет <code>base</code>. Нужно чтобы справа было "package:base".)</p></li>
+</ol>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
