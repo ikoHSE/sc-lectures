@@ -16,7 +16,7 @@ body {
   background-color: #000; }
 
 .reveal {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
   font-size: 42px;
   font-weight: normal;
   color: #fff; }
@@ -47,7 +47,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #fff;
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
@@ -283,8 +283,3 @@ body {
   border-width: 2px;
   border-style: solid;
   border-color: #777; }
-
-.sourceCode {
-  background-color: transparent;
-  overflow: auto;
-  margin: 0em; }
