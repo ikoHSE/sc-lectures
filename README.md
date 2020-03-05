@@ -2,13 +2,29 @@
 
 - Lecture 1 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/1.md)] [[web](https://ikohse.github.io/sc-lectures/1.html)]
   - Functions as a monoid
-  - Functions
-  - Pattern matching
-  - Product types
-  - Sum types
-  - Lambdas
+  - [Functions](http://learnyouahaskell.com/starting-out#babys-first-functions)
+  - [Pattern matching](http://learnyouahaskell.com/syntax-in-functions#pattern-matching)
+  - [Product types](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#algebraic-data-types)
+  - [Where](http://learnyouahaskell.com/syntax-in-functions#where)
+  - [Sum types](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#algebraic-data-types)
+  - [Lambdas](http://learnyouahaskell.com/higher-order-functions#lambdas)
   - Functions of multiple arguments
-  - Currying
-  - Lists
-  - Quicksort
-  - Parametric polymorphism in structures
+  - [Currying](http://learnyouahaskell.com/higher-order-functions#curried-functions)
+  - [Lists](http://learnyouahaskell.com/starting-out#an-intro-to-lists)
+  - [Quicksort](http://learnyouahaskell.com/recursion#quick-sort)
+  - [Parametric polymorphism in structures](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#type-parameters)
+- Lecture 2 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/2.md)] [[web](https://ikohse.github.io/sc-lectures/2.html)]
+  - [Record syntax](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#record-syntax)
+  - [Typeclasses](http://learnyouahaskell.com/types-and-typeclasses#typeclasses-101)
+  - [Typeclass instances](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#typeclasses-102)
+  - [Case](http://learnyouahaskell.com/syntax-in-functions#case-expressions)
+  - [Polymorphic typeclass instances](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#typeclasses-102)
+  - [`Monoid` typeclass](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Monoid.html#t:Monoid)
+  - [`fold`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Foldable.html#v:fold)
+  - [Deriving](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#derived-instances)
+  - [Type synonyms](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#type-synonyms)
+  - Error handling
+    - [`Maybe`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Maybe.html#t:Maybe)
+    - [`Either`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Either.html#t:Either)
+  - [`Functor`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Functor.html#t:Functor)
+  - [`Alternative`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html#t:Alternative)
