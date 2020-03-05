@@ -13,7 +13,7 @@
   - [Lists](http://learnyouahaskell.com/starting-out#an-intro-to-lists)
   - [Quicksort](http://learnyouahaskell.com/recursion#quick-sort)
   - [Parametric polymorphism in structures](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#type-parameters)
-- Lecture 2 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/2.md)] [[web](https://ikohse.github.io/sc-lectures/2.html)] [[Seminar](https://github.com/ikoHSE/sc-task-1)]
+- Lecture 2 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/2.md)] [[web](https://ikohse.github.io/sc-lectures/2.html)] [[Seminar](https://github.com/ikoHSE/sc-task-2)]
   - [Record syntax](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#record-syntax)
   - [Typeclasses](http://learnyouahaskell.com/types-and-typeclasses#typeclasses-101)
   - [Typeclass instances](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#typeclasses-102)
