@@ -1,7 +1,6 @@
 ## Lecures
 
 - Lecture 1 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/1.md)] [[web](https://ikohse.github.io/sc-lectures/1.html)] [[Seminar](https://github.com/ikoHSE/sc-task-1)]
-  - Functions as a monoid
   - [Functions](http://learnyouahaskell.com/starting-out#babys-first-functions)
   - [Pattern matching](http://learnyouahaskell.com/syntax-in-functions#pattern-matching)
   - [Product types](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#algebraic-data-types)
