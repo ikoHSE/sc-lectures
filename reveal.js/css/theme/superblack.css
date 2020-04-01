@@ -277,9 +277,9 @@ body {
   background-color: #222; }
 
 .reveal code {
-  background-color: #333;
+  background-color: #1f1f1f;
   border-radius: 13px;
   padding: 0px 4px 0px 4px;
   border-width: 2px;
   border-style: solid;
-  border-color: #777; }
+  border-color: #6b6b6b; }
