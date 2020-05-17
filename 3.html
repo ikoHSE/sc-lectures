@@ -277,7 +277,7 @@
 <div class="sourceCode" id="cb33"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">instance</span> <span class="dt">Monad</span> <span class="dt">WithLog</span> <span class="kw">where</span></span>
 <span id="cb33-2"><a href="#cb33-2"></a>  (<span class="op">&lt;=&lt;</span>) f g x <span class="ot">=</span> <span class="dt">WithLog</span> x3 (log1 <span class="op">&lt;&gt;</span> log2)</span>
 <span id="cb33-3"><a href="#cb33-3"></a>     <span class="kw">where</span></span>
-<span id="cb33-4"><a href="#cb33-4"></a>       (<span class="dt">WithLog</span> x2 log1) <span class="ot">=</span> g x1</span>
+<span id="cb33-4"><a href="#cb33-4"></a>       (<span class="dt">WithLog</span> x2 log1) <span class="ot">=</span> g x</span>
 <span id="cb33-5"><a href="#cb33-5"></a>       (<span class="dt">WithLog</span> x3 log2) <span class="ot">=</span> f x2</span></code></pre></div>
 </section>
 <section class="slide level2">
@@ -304,8 +304,8 @@
 <div class="sourceCode" id="cb40"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb40-1"><a href="#cb40-1"></a><span class="ot">(&gt;&gt;=) ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> m b <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> m c) <span class="ot">-&gt;</span> m c</span></code></pre></div>
 <div class="sourceCode" id="cb41"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb41-1"><a href="#cb41-1"></a><span class="ot">buyCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">Payment</span></span>
 <span id="cb41-2"><a href="#cb41-2"></a>buyCoffee order <span class="ot">=</span> getCoffee order <span class="op">&gt;&gt;=</span> payForCoffee</span></code></pre></div>
-<div class="sourceCode" id="cb42"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb42-1"><a href="#cb42-1"></a><span class="ot">maybeBuyCoffee ::</span> <span class="dt">Myabe</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">Payment</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>maybeBuyCoffee order <span class="ot">=</span> order <span class="op">&gt;&gt;=</span> buyCoffee</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb42-1"><a href="#cb42-1"></a><span class="ot">maybeBuyCoffee ::</span> <span class="dt">Maybe</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">Payment</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a>maybeBuyCoffee mOrder <span class="ot">=</span> mOrder <span class="op">&gt;&gt;=</span> buyCoffee</span></code></pre></div>
 <div class="sourceCode" id="cb43"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb43-1"><a href="#cb43-1"></a><span class="ot">(&gt;&gt;=) ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span>        m b  <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> m c) <span class="ot">-&gt;</span>        m c</span></code></pre></div>
 <div class="sourceCode" id="cb44"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb44-1"><a href="#cb44-1"></a><span class="ot">(&gt;=&gt;) ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> (a  <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> m c) <span class="ot">-&gt;</span> (a  <span class="ot">-&gt;</span> m c)</span></code></pre></div>
 <div class="sourceCode" id="cb45"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb45-1"><a href="#cb45-1"></a>                    (() <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> m c) <span class="ot">-&gt;</span> (() <span class="ot">-&gt;</span> m c)</span></code></pre></div>
@@ -315,13 +315,13 @@
 
 <div class="sourceCode" id="cb47"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb47-1"><a href="#cb47-1"></a><span class="ot">(&gt;=&gt;) ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> m c) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> m c)</span></code></pre></div>
 <div class="sourceCode" id="cb48"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb48-1"><a href="#cb48-1"></a><span class="ot">(&gt;&gt;=) ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span>       m b  <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> m c) <span class="ot">-&gt;</span>       m c</span>
-<span id="cb48-2"><a href="#cb48-2"></a>(<span class="op">&gt;&gt;=</span>) mb f <span class="ot">=</span> ( (\() <span class="ot">-&gt;</span> mb) <span class="op">&gt;=&gt;</span> f ) ()</span></code></pre></div>
-<div class="sourceCode" id="cb49"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb49-1"><a href="#cb49-1"></a>(<span class="op">&gt;&gt;=</span>) mb f <span class="ot">=</span> ( (\() <span class="ot">-&gt;</span> mb) <span class="op">&gt;=&gt;</span> f ) ()</span>
-<span id="cb49-2"><a href="#cb49-2"></a><span class="co">--              () -&gt; m b      |</span></span>
-<span id="cb49-3"><a href="#cb49-3"></a><span class="co">--                          b -&gt; m c</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>(<span class="op">&gt;&gt;=</span>) mb bmc <span class="ot">=</span> ( (\() <span class="ot">-&gt;</span> mb) <span class="op">&gt;=&gt;</span> bmc ) ()</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb49-1"><a href="#cb49-1"></a>(<span class="op">&gt;&gt;=</span>) mb bmc <span class="ot">=</span> ( (\() <span class="ot">-&gt;</span> mb) <span class="op">&gt;=&gt;</span> bmc ) ()</span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="co">--              () -&gt; m b         |</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="co">--                             b -&gt; m c</span></span>
 <span id="cb49-4"><a href="#cb49-4"></a><span class="co">--</span></span>
-<span id="cb49-5"><a href="#cb49-5"></a><span class="co">--           ^-------------------^</span></span>
-<span id="cb49-6"><a href="#cb49-6"></a><span class="co">--                () -&gt; m c</span></span></code></pre></div>
+<span id="cb49-5"><a href="#cb49-5"></a><span class="co">--           ^-----------------------^</span></span>
+<span id="cb49-6"><a href="#cb49-6"></a><span class="co">--                  () -&gt; m c</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -375,24 +375,22 @@
 <span id="cb58-2"><a href="#cb58-2"></a>  {<span class="ot"> runReader ::</span> r <span class="ot">-&gt;</span> a</span>
 <span id="cb58-3"><a href="#cb58-3"></a>  }</span></code></pre></div>
 <p><span class="fragment"><code>r</code> – то, что у нас в “окружении”.</span></p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb59-1"><a href="#cb59-1"></a><span class="ot">getCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Markup</span> <span class="dt">Coffee</span></span>
-<span id="cb59-2"><a href="#cb59-2"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Markup</span> <span class="dt">Payment</span></span></code></pre></div>
-<div class="sourceCode" id="cb60"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb60-1"><a href="#cb60-1"></a><span class="ot">payment ::</span> <span class="dt">Payment</span></span>
-<span id="cb60-2"><a href="#cb60-2"></a>payment <span class="ot">=</span> runReader (payForCoffee coffee) markup</span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb61"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb61-1"><a href="#cb61-1"></a><span class="kw">data</span> <span class="dt">Reader</span> r a <span class="ot">=</span> <span class="dt">Reader</span> {<span class="ot"> runReader ::</span> r <span class="ot">-&gt;</span> a }</span>
-<span id="cb61-2"><a href="#cb61-2"></a></span>
-<span id="cb61-3"><a href="#cb61-3"></a><span class="ot">getCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Markup</span> <span class="dt">Coffee</span></span>
-<span id="cb61-4"><a href="#cb61-4"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Markup</span> <span class="dt">Payment</span></span></code></pre></div>
-<div class="sourceCode" id="cb62"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb62-1"><a href="#cb62-1"></a><span class="ot">buyCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Markup</span> <span class="dt">Payment</span></span>
-<span id="cb62-2"><a href="#cb62-2"></a>buyCoffee <span class="ot">=</span> payForCoffee <span class="op">&lt;=&lt;</span> getCoffee</span></code></pre></div>
-<div class="sourceCode" id="cb63"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb63-1"><a href="#cb63-1"></a><span class="kw">type</span> <span class="dt">PricingEnv</span> <span class="ot">=</span> <span class="dt">Reader</span> <span class="dt">Markup</span></span></code></pre></div>
-<div class="sourceCode" id="cb64"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb64-1"><a href="#cb64-1"></a><span class="ot">getCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Coffee</span></span>
-<span id="cb64-2"><a href="#cb64-2"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
-<span id="cb64-3"><a href="#cb64-3"></a><span class="ot">buyCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
-<span id="cb64-4"><a href="#cb64-4"></a>buyCoffee <span class="ot">=</span> payForCoffee <span class="op">&lt;=&lt;</span> getCoffee</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb59-1"><a href="#cb59-1"></a><span class="kw">data</span> <span class="dt">Reader</span> r a <span class="ot">=</span> <span class="dt">Reader</span> {<span class="ot"> runReader ::</span> r <span class="ot">-&gt;</span> a }</span>
+<span id="cb59-2"><a href="#cb59-2"></a></span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="ot">getCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">Markup</span> <span class="ot">-&gt;</span> <span class="dt">Coffee</span></span>
+<span id="cb59-4"><a href="#cb59-4"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">Markup</span> <span class="ot">-&gt;</span> <span class="dt">Payment</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb60-1"><a href="#cb60-1"></a><span class="ot">getCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Markup</span> <span class="dt">Coffee</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Markup</span> <span class="dt">Payment</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb61-1"><a href="#cb61-1"></a><span class="kw">type</span> <span class="dt">PricingEnv</span> <span class="ot">=</span> <span class="dt">Reader</span> <span class="dt">Markup</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb62-1"><a href="#cb62-1"></a><span class="ot">getCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Coffee</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb63-1"><a href="#cb63-1"></a><span class="ot">buyCoffee ::</span> <span class="dt">Order</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
+<span id="cb63-2"><a href="#cb63-2"></a>buyCoffee <span class="ot">=</span> payForCoffee <span class="op">&lt;=&lt;</span> getCoffee</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb64-1"><a href="#cb64-1"></a><span class="ot">payment ::</span> <span class="dt">Payment</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a>payment <span class="ot">=</span> runReader (buyCoffee order) markup</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -445,83 +443,88 @@
 <span id="cb69-2"><a href="#cb69-2"></a><span class="ot">qux ::</span> a <span class="ot">-&gt;</span> <span class="dt">Reader</span> r b</span>
 <span id="cb69-3"><a href="#cb69-3"></a></span>
 <span id="cb69-4"><a href="#cb69-4"></a><span class="ot">foo ::</span> <span class="dt">Reader</span> r b</span>
-<span id="cb69-5"><a href="#cb69-5"></a>foo <span class="ot">=</span> bar <span class="op">&gt;&gt;=</span> \a <span class="ot">-&gt;</span> qux a</span></code></pre></div>
+<span id="cb69-5"><a href="#cb69-5"></a>foo <span class="ot">=</span> bar <span class="op">&gt;&gt;=</span> \x <span class="ot">-&gt;</span> qux x</span></code></pre></div>
 <div class="sourceCode" id="cb70"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb70-1"><a href="#cb70-1"></a>foo <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb70-2"><a href="#cb70-2"></a>  a <span class="ot">&lt;-</span> bar</span>
-<span id="cb70-3"><a href="#cb70-3"></a>  qux a</span></code></pre></div>
+<span id="cb70-2"><a href="#cb70-2"></a>  <span class="co">-- (x :: a) &lt;- (bar :: Reader r a)</span></span>
+<span id="cb70-3"><a href="#cb70-3"></a>  x <span class="ot">&lt;-</span> bar</span>
+<span id="cb70-4"><a href="#cb70-4"></a>  qux x</span></code></pre></div>
 <div class="sourceCode" id="cb71"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb71-1"><a href="#cb71-1"></a>foo <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb71-2"><a href="#cb71-2"></a>  a <span class="ot">&lt;-</span> bar</span>
-<span id="cb71-3"><a href="#cb71-3"></a>  b <span class="ot">&lt;-</span> qux a</span>
-<span id="cb71-4"><a href="#cb71-4"></a>  <span class="fu">return</span> b</span></code></pre></div>
+<span id="cb71-2"><a href="#cb71-2"></a>  <span class="co">-- (x :: a) &lt;- (bar :: Reader r a)</span></span>
+<span id="cb71-3"><a href="#cb71-3"></a>  x <span class="ot">&lt;-</span> bar</span>
+<span id="cb71-4"><a href="#cb71-4"></a>  <span class="co">-- (y :: b) &lt;- (qux x :: Reader r b)</span></span>
+<span id="cb71-5"><a href="#cb71-5"></a>  y <span class="ot">&lt;-</span> qux x</span>
+<span id="cb71-6"><a href="#cb71-6"></a>  <span class="fu">return</span> y</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb72-1"><a href="#cb72-1"></a>foo <span class="ot">=</span> bar <span class="op">&gt;&gt;=</span> \x <span class="ot">-&gt;</span> qux x <span class="op">&gt;&gt;=</span> <span class="fu">return</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb72"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb72-1"><a href="#cb72-1"></a><span class="kw">type</span> <span class="dt">PricingEnv</span> <span class="ot">=</span> <span class="dt">Reader</span> <span class="dt">Markup</span></span>
-<span id="cb72-2"><a href="#cb72-2"></a></span>
-<span id="cb72-3"><a href="#cb72-3"></a><span class="ot">getCoffeePrice ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Price</span></span>
-<span id="cb72-4"><a href="#cb72-4"></a><span class="ot">getDiscount ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Price</span></span>
-<span id="cb72-5"><a href="#cb72-5"></a><span class="ot">getPayment ::</span> <span class="dt">Price</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
-<span id="cb72-6"><a href="#cb72-6"></a></span>
-<span id="cb72-7"><a href="#cb72-7"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
-<span id="cb72-8"><a href="#cb72-8"></a>payForCoffee coffee <span class="ot">=</span></span>
-<span id="cb72-9"><a href="#cb72-9"></a>  coffee <span class="op">&gt;&gt;=</span> getCoffeePrice <span class="op">&gt;&gt;=</span> \coffeePrice <span class="ot">-&gt;</span></span>
-<span id="cb72-10"><a href="#cb72-10"></a>    coffee <span class="op">&gt;&gt;=</span> getDiscount <span class="op">&gt;&gt;=</span> \discount <span class="ot">-&gt;</span></span>
-<span id="cb72-11"><a href="#cb72-11"></a>      getPayment (coffeePrice <span class="op">-</span> discount)</span></code></pre></div>
-<div class="sourceCode" id="cb73"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb73-1"><a href="#cb73-1"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
-<span id="cb73-2"><a href="#cb73-2"></a>payForCoffee coffee <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb73-3"><a href="#cb73-3"></a>  coffeePrice <span class="ot">&lt;-</span> getCoffeePrice coffee</span>
-<span id="cb73-4"><a href="#cb73-4"></a>  discount <span class="ot">&lt;-</span> getDiscount coffee</span>
-<span id="cb73-5"><a href="#cb73-5"></a>  getPayment (coffeePrice <span class="op">-</span> discount)</span></code></pre></div>
-</section>
-<section id="let-statement" class="slide level2">
-<h2>Let statement</h2>
-<div class="sourceCode" id="cb74"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb74-1"><a href="#cb74-1"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
+<div class="sourceCode" id="cb73"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb73-1"><a href="#cb73-1"></a><span class="kw">type</span> <span class="dt">PricingEnv</span> <span class="ot">=</span> <span class="dt">Reader</span> <span class="dt">Markup</span></span>
+<span id="cb73-2"><a href="#cb73-2"></a></span>
+<span id="cb73-3"><a href="#cb73-3"></a><span class="ot">getCoffeePrice ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Price</span></span>
+<span id="cb73-4"><a href="#cb73-4"></a><span class="ot">getDiscount ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Price</span></span>
+<span id="cb73-5"><a href="#cb73-5"></a><span class="ot">getPayment ::</span> <span class="dt">Price</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
+<span id="cb73-6"><a href="#cb73-6"></a></span>
+<span id="cb73-7"><a href="#cb73-7"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
+<span id="cb73-8"><a href="#cb73-8"></a>payForCoffee coffee <span class="ot">=</span></span>
+<span id="cb73-9"><a href="#cb73-9"></a>  coffee <span class="op">&gt;&gt;=</span> getCoffeePrice <span class="op">&gt;&gt;=</span> \coffeePrice <span class="ot">-&gt;</span></span>
+<span id="cb73-10"><a href="#cb73-10"></a>    coffee <span class="op">&gt;&gt;=</span> getDiscount <span class="op">&gt;&gt;=</span> \discount <span class="ot">-&gt;</span></span>
+<span id="cb73-11"><a href="#cb73-11"></a>      getPayment (coffeePrice <span class="op">-</span> discount)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb74-1"><a href="#cb74-1"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
 <span id="cb74-2"><a href="#cb74-2"></a>payForCoffee coffee <span class="ot">=</span> <span class="kw">do</span></span>
 <span id="cb74-3"><a href="#cb74-3"></a>  coffeePrice <span class="ot">&lt;-</span> getCoffeePrice coffee</span>
 <span id="cb74-4"><a href="#cb74-4"></a>  discount <span class="ot">&lt;-</span> getDiscount coffee</span>
 <span id="cb74-5"><a href="#cb74-5"></a>  getPayment (coffeePrice <span class="op">-</span> discount)</span></code></pre></div>
-<div class="sourceCode" id="cb75"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb75-1"><a href="#cb75-1"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
+</section>
+<section id="let-statement" class="slide level2">
+<h2>Let statement</h2>
+<div class="sourceCode" id="cb75"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb75-1"><a href="#cb75-1"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
 <span id="cb75-2"><a href="#cb75-2"></a>payForCoffee coffee <span class="ot">=</span> <span class="kw">do</span></span>
 <span id="cb75-3"><a href="#cb75-3"></a>  coffeePrice <span class="ot">&lt;-</span> getCoffeePrice coffee</span>
 <span id="cb75-4"><a href="#cb75-4"></a>  discount <span class="ot">&lt;-</span> getDiscount coffee</span>
-<span id="cb75-5"><a href="#cb75-5"></a>  <span class="kw">let</span> amount <span class="ot">=</span> coffeePrice <span class="op">-</span> discount</span>
-<span id="cb75-6"><a href="#cb75-6"></a>  getPayment amount</span></code></pre></div>
+<span id="cb75-5"><a href="#cb75-5"></a>  getPayment (coffeePrice <span class="op">-</span> discount)</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb76-1"><a href="#cb76-1"></a><span class="ot">payForCoffee ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Payment</span></span>
+<span id="cb76-2"><a href="#cb76-2"></a>payForCoffee coffee <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb76-3"><a href="#cb76-3"></a>  coffeePrice <span class="ot">&lt;-</span> getCoffeePrice coffee</span>
+<span id="cb76-4"><a href="#cb76-4"></a>  discount <span class="ot">&lt;-</span> getDiscount coffee</span>
+<span id="cb76-5"><a href="#cb76-5"></a>  <span class="kw">let</span> amount <span class="ot">=</span> coffeePrice <span class="op">-</span> discount</span>
+<span id="cb76-6"><a href="#cb76-6"></a>  getPayment amount</span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb76"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb76-1"><a href="#cb76-1"></a><span class="kw">type</span> <span class="dt">PricingEnv</span> <span class="ot">=</span> <span class="dt">Reader</span> <span class="dt">Markup</span></span>
-<span id="cb76-2"><a href="#cb76-2"></a><span class="kw">type</span> <span class="dt">Price</span> <span class="ot">=</span> <span class="dt">Int</span></span>
-<span id="cb76-3"><a href="#cb76-3"></a></span>
-<span id="cb76-4"><a href="#cb76-4"></a><span class="kw">data</span> <span class="dt">Coffee</span> <span class="ot">=</span> <span class="dt">Coffee</span> {<span class="ot"> getCoffeePrice ::</span> <span class="dt">Price</span> }</span>
-<span id="cb76-5"><a href="#cb76-5"></a></span>
-<span id="cb76-6"><a href="#cb76-6"></a><span class="ot">getCoffeePrice ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Price</span></span></code></pre></div>
-<div class="sourceCode" id="cb77"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb77-1"><a href="#cb77-1"></a><span class="kw">data</span> <span class="dt">Reader</span> r a <span class="ot">=</span> <span class="dt">Reader</span> {<span class="ot"> runReader ::</span> r <span class="ot">-&gt;</span> a}</span></code></pre></div>
-<div class="sourceCode" id="cb78"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb78-1"><a href="#cb78-1"></a><span class="ot">ask ::</span> <span class="dt">Reader</span> r r</span>
-<span id="cb78-2"><a href="#cb78-2"></a>ask <span class="ot">=</span> <span class="dt">Reader</span> (\r <span class="ot">-&gt;</span> r)</span></code></pre></div>
-<div class="sourceCode" id="cb79"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb79-1"><a href="#cb79-1"></a><span class="ot">getCoffeePrice ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Price</span></span>
-<span id="cb79-2"><a href="#cb79-2"></a>getCoffeePrice coffee <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb79-3"><a href="#cb79-3"></a>  markup <span class="ot">&lt;-</span> ask</span>
-<span id="cb79-4"><a href="#cb79-4"></a>  <span class="kw">let</span> coffePrice <span class="ot">=</span> getCoffeePrice coffee</span>
-<span id="cb79-5"><a href="#cb79-5"></a>  <span class="fu">return</span> (coffee <span class="op">+</span> markup)</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb77-1"><a href="#cb77-1"></a><span class="kw">type</span> <span class="dt">PricingEnv</span> <span class="ot">=</span> <span class="dt">Reader</span> <span class="dt">Markup</span></span>
+<span id="cb77-2"><a href="#cb77-2"></a><span class="kw">type</span> <span class="dt">Price</span> <span class="ot">=</span> <span class="dt">Int</span></span>
+<span id="cb77-3"><a href="#cb77-3"></a></span>
+<span id="cb77-4"><a href="#cb77-4"></a><span class="kw">data</span> <span class="dt">Coffee</span> <span class="ot">=</span> <span class="dt">Coffee</span> {<span class="ot"> getCoffeePrice ::</span> <span class="dt">Price</span> }</span>
+<span id="cb77-5"><a href="#cb77-5"></a></span>
+<span id="cb77-6"><a href="#cb77-6"></a><span class="ot">getCoffeePrice ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Price</span></span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb78-1"><a href="#cb78-1"></a><span class="kw">data</span> <span class="dt">Reader</span> r a <span class="ot">=</span> <span class="dt">Reader</span> {<span class="ot"> runReader ::</span> r <span class="ot">-&gt;</span> a}</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb79-1"><a href="#cb79-1"></a><span class="ot">ask ::</span> <span class="dt">Reader</span> r r</span>
+<span id="cb79-2"><a href="#cb79-2"></a>ask <span class="ot">=</span> <span class="dt">Reader</span> (\r <span class="ot">-&gt;</span> r)</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb80-1"><a href="#cb80-1"></a><span class="ot">getCoffeePrice ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">PricingEnv</span> <span class="dt">Price</span></span>
+<span id="cb80-2"><a href="#cb80-2"></a>getCoffeePrice coffee <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb80-3"><a href="#cb80-3"></a>  <span class="co">-- (markup :: Markup) &lt;- (ask :: PricingEnv Markup)</span></span>
+<span id="cb80-4"><a href="#cb80-4"></a>  markup <span class="ot">&lt;-</span> ask</span>
+<span id="cb80-5"><a href="#cb80-5"></a>  <span class="kw">let</span> coffePrice <span class="ot">=</span> getCoffeePrice coffee</span>
+<span id="cb80-6"><a href="#cb80-6"></a>  <span class="fu">return</span> (coffee <span class="op">+</span> markup)</span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb80"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb80-1"><a href="#cb80-1"></a><span class="kw">data</span> <span class="dt">Order</span> <span class="ot">=</span> <span class="dt">Order</span> {<span class="ot"> orderCoffee ::</span> <span class="dt">Coffee</span>,<span class="ot"> orderId ::</span> <span class="dt">Int</span> }</span></code></pre></div>
-<div class="sourceCode" id="cb81"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb81-1"><a href="#cb81-1"></a><span class="ot">createOrder ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">Order</span></span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb81-1"><a href="#cb81-1"></a><span class="kw">data</span> <span class="dt">Order</span> <span class="ot">=</span> <span class="dt">Order</span> {<span class="ot"> orderCoffee ::</span> <span class="dt">Coffee</span>,<span class="ot"> orderId ::</span> <span class="dt">Int</span> }</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb82-1"><a href="#cb82-1"></a><span class="ot">createOrder ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">Order</span></span></code></pre></div>
 <p><span class="fragment">Откуда брать <code>orderId</code>?</span></p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb82-1"><a href="#cb82-1"></a><span class="ot">createOrder ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Int</span> <span class="dt">Order</span></span>
-<span id="cb82-2"><a href="#cb82-2"></a>createOrder coffee <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb82-3"><a href="#cb82-3"></a>  newId <span class="ot">&lt;-</span> ask</span>
-<span id="cb82-4"><a href="#cb82-4"></a>  <span class="fu">return</span> (<span class="dt">Order</span> coffee newId)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb83-1"><a href="#cb83-1"></a><span class="ot">createOrder ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Int</span> <span class="dt">Order</span></span>
+<span id="cb83-2"><a href="#cb83-2"></a>createOrder coffee <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb83-3"><a href="#cb83-3"></a>  newId <span class="ot">&lt;-</span> ask</span>
+<span id="cb83-4"><a href="#cb83-4"></a>  <span class="fu">return</span> (<span class="dt">Order</span> coffee newId)</span></code></pre></div>
 <p><span class="fragment">🎉</span></p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb83-1"><a href="#cb83-1"></a><span class="ot">createOrders ::</span> [<span class="dt">Coffee</span>] <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Int</span> [<span class="dt">Order</span>]</span></code></pre></div>
-<div class="sourceCode" id="cb84"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">mapM</span><span class="ot"> ::</span> (<span class="dt">Monad</span> m) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> m [b]</span></code></pre></div>
-<div class="sourceCode" id="cb85"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb85-1"><a href="#cb85-1"></a>createOrders <span class="ot">=</span> <span class="fu">mapM</span> createOrder</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb84-1"><a href="#cb84-1"></a><span class="ot">createOrders ::</span> [<span class="dt">Coffee</span>] <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Int</span> [<span class="dt">Order</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb85-1"><a href="#cb85-1"></a><span class="fu">mapM</span><span class="ot"> ::</span> (<span class="dt">Monad</span> m) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> m [b]</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb86-1"><a href="#cb86-1"></a>createOrders <span class="ot">=</span> <span class="fu">mapM</span> createOrder</span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb86"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb86-1"><a href="#cb86-1"></a><span class="ot">createOrders ::</span> [<span class="dt">Coffee</span>] <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Int</span> [<span class="dt">Order</span>]</span>
-<span id="cb86-2"><a href="#cb86-2"></a>createOrders <span class="ot">=</span> <span class="fu">mapM</span> createOrder</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb87-1"><a href="#cb87-1"></a><span class="ot">createOrders ::</span> [<span class="dt">Coffee</span>] <span class="ot">-&gt;</span> <span class="dt">Reader</span> <span class="dt">Int</span> [<span class="dt">Order</span>]</span>
+<span id="cb87-2"><a href="#cb87-2"></a>createOrders <span class="ot">=</span> <span class="fu">mapM</span> createOrder</span></code></pre></div>
 <p><span class="fragment">Все <code>id</code> будут одинаковые.</span></p>
 <p><span class="fragment"><code>Reader</code> эквивалентно глобальной <strong>константе</strong>.</span></p>
 <p><span class="fragment">Айдишники – скорее глобальная <strong>переменная</strong>.</span></p>
@@ -530,108 +533,121 @@
 </section>
 <section id="state" class="slide level2">
 <h2>State!</h2>
-<div class="sourceCode" id="cb87"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb87-1"><a href="#cb87-1"></a><span class="kw">data</span> <span class="dt">State</span> s a <span class="ot">=</span> <span class="op">...</span> <span class="co">-- s -- само состояние</span></span>
-<span id="cb87-2"><a href="#cb87-2"></a></span>
-<span id="cb87-3"><a href="#cb87-3"></a><span class="ot">get ::</span> <span class="dt">State</span> s s</span>
-<span id="cb87-4"><a href="#cb87-4"></a><span class="ot">put ::</span> s <span class="ot">-&gt;</span> <span class="dt">State</span> s ()</span></code></pre></div>
-<div class="sourceCode" id="cb88"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb88-1"><a href="#cb88-1"></a><span class="kw">data</span> <span class="dt">State</span> s a <span class="ot">=</span> <span class="dt">State</span> {<span class="ot"> runState ::</span> s <span class="ot">-&gt;</span> (a, s) }</span>
+<div class="sourceCode" id="cb88"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb88-1"><a href="#cb88-1"></a><span class="kw">data</span> <span class="dt">State</span> s a <span class="ot">=</span> <span class="op">...</span> <span class="co">-- s -- само состояние</span></span>
 <span id="cb88-2"><a href="#cb88-2"></a></span>
 <span id="cb88-3"><a href="#cb88-3"></a><span class="ot">get ::</span> <span class="dt">State</span> s s</span>
-<span id="cb88-4"><a href="#cb88-4"></a>get <span class="ot">=</span> <span class="dt">State</span> (\s <span class="ot">-&gt;</span> (s, s))</span>
-<span id="cb88-5"><a href="#cb88-5"></a></span>
-<span id="cb88-6"><a href="#cb88-6"></a><span class="ot">put ::</span> s <span class="ot">-&gt;</span> <span class="dt">State</span> s ()</span>
-<span id="cb88-7"><a href="#cb88-7"></a>put s <span class="ot">=</span> <span class="dt">State</span> (\_ <span class="ot">-&gt;</span> ((), s))</span></code></pre></div>
+<span id="cb88-4"><a href="#cb88-4"></a><span class="ot">put ::</span> s <span class="ot">-&gt;</span> <span class="dt">State</span> s ()</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb89-1"><a href="#cb89-1"></a><span class="kw">data</span> <span class="dt">State</span> s a <span class="ot">=</span> <span class="dt">State</span> {<span class="ot"> runState ::</span> s <span class="ot">-&gt;</span> (a, s) }</span>
+<span id="cb89-2"><a href="#cb89-2"></a></span>
+<span id="cb89-3"><a href="#cb89-3"></a><span class="ot">get ::</span> <span class="dt">State</span> s s</span>
+<span id="cb89-4"><a href="#cb89-4"></a>get <span class="ot">=</span> <span class="dt">State</span> (\s <span class="ot">-&gt;</span> (s, s))</span>
+<span id="cb89-5"><a href="#cb89-5"></a></span>
+<span id="cb89-6"><a href="#cb89-6"></a><span class="ot">put ::</span> s <span class="ot">-&gt;</span> <span class="dt">State</span> s ()</span>
+<span id="cb89-7"><a href="#cb89-7"></a>put s <span class="ot">=</span> <span class="dt">State</span> (\_ <span class="ot">-&gt;</span> ((), s))</span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb89"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb89-1"><a href="#cb89-1"></a><span class="kw">data</span> <span class="dt">State</span> s a <span class="ot">=</span> <span class="dt">State</span> {<span class="ot"> runState ::</span> s <span class="ot">-&gt;</span> (a, s) }</span></code></pre></div>
-<div class="sourceCode" id="cb90"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb90-1"><a href="#cb90-1"></a><span class="kw">class</span> <span class="dt">Monad</span> (<span class="dt">State</span> s) <span class="kw">where</span></span>
-<span id="cb90-2"><a href="#cb90-2"></a>  <span class="fu">return</span> x <span class="ot">=</span> <span class="dt">State</span> (\s <span class="ot">-&gt;</span> (x, s))</span>
-<span id="cb90-3"><a href="#cb90-3"></a></span>
-<span id="cb90-4"><a href="#cb90-4"></a><span class="ot">  (&gt;&gt;=) ::</span> <span class="dt">State</span> s a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> <span class="dt">State</span> s b) <span class="ot">-&gt;</span> <span class="dt">State</span> s b</span>
-<span id="cb90-5"><a href="#cb90-5"></a>  (<span class="dt">State</span> f) <span class="op">&gt;&gt;=</span> g <span class="ot">=</span> <span class="dt">State</span> go</span>
-<span id="cb90-6"><a href="#cb90-6"></a>    <span class="kw">where</span></span>
-<span id="cb90-7"><a href="#cb90-7"></a>      go s <span class="ot">=</span> runState (g a) s&#39;</span>
-<span id="cb90-8"><a href="#cb90-8"></a>        <span class="kw">where</span></span>
-<span id="cb90-9"><a href="#cb90-9"></a>          (a, s&#39;) <span class="ot">=</span> f s</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb90-1"><a href="#cb90-1"></a><span class="kw">data</span> <span class="dt">State</span> s a <span class="ot">=</span> <span class="dt">State</span> {<span class="ot"> runState ::</span> s <span class="ot">-&gt;</span> (a, s) }</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb91-1"><a href="#cb91-1"></a><span class="kw">class</span> <span class="dt">Monad</span> (<span class="dt">State</span> s) <span class="kw">where</span></span>
+<span id="cb91-2"><a href="#cb91-2"></a>  <span class="fu">return</span> x <span class="ot">=</span> <span class="dt">State</span> (\s <span class="ot">-&gt;</span> (x, s))</span>
+<span id="cb91-3"><a href="#cb91-3"></a></span>
+<span id="cb91-4"><a href="#cb91-4"></a><span class="ot">  (&gt;&gt;=) ::</span> <span class="dt">State</span> s a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> <span class="dt">State</span> s b) <span class="ot">-&gt;</span> <span class="dt">State</span> s b</span>
+<span id="cb91-5"><a href="#cb91-5"></a>  (<span class="dt">State</span> f) <span class="op">&gt;&gt;=</span> g <span class="ot">=</span> <span class="dt">State</span> go</span>
+<span id="cb91-6"><a href="#cb91-6"></a>    <span class="kw">where</span></span>
+<span id="cb91-7"><a href="#cb91-7"></a>      go s <span class="ot">=</span> runState (g a) s&#39;</span>
+<span id="cb91-8"><a href="#cb91-8"></a>        <span class="kw">where</span></span>
+<span id="cb91-9"><a href="#cb91-9"></a>          (a, s&#39;) <span class="ot">=</span> f s</span></code></pre></div>
 </section>
 <section class="slide level2">
 
 <h3 id="айдишники">Айдишники!</h3>
-<div class="sourceCode" id="cb91"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb91-1"><a href="#cb91-1"></a><span class="ot">getNewId ::</span> <span class="dt">State</span> <span class="dt">Int</span> <span class="dt">Int</span></span>
-<span id="cb91-2"><a href="#cb91-2"></a>getNewId <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb91-3"><a href="#cb91-3"></a>  newId <span class="ot">&lt;-</span> get</span>
-<span id="cb91-4"><a href="#cb91-4"></a>  put (newId <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb91-5"><a href="#cb91-5"></a>  <span class="fu">return</span> newId</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb92-1"><a href="#cb92-1"></a><span class="ot">getNewId ::</span> <span class="dt">State</span> <span class="dt">Int</span> <span class="dt">Int</span></span>
+<span id="cb92-2"><a href="#cb92-2"></a>getNewId <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb92-3"><a href="#cb92-3"></a>  newId <span class="ot">&lt;-</span> get</span>
+<span id="cb92-4"><a href="#cb92-4"></a>  put (newId <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb92-5"><a href="#cb92-5"></a>  <span class="fu">return</span> newId</span></code></pre></div>
 <p><span class="fragment">– Это какой-то процедурный языке получается!</span></p>
 <p><span class="fragment">– Лучше!*</span></p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb92-1"><a href="#cb92-1"></a><span class="ot">createOrder ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">State</span> <span class="dt">Int</span> <span class="dt">Order</span></span>
-<span id="cb92-2"><a href="#cb92-2"></a>createOrder coffee <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb92-3"><a href="#cb92-3"></a>  newId <span class="ot">&lt;-</span> getNewId</span>
-<span id="cb92-4"><a href="#cb92-4"></a>  <span class="fu">return</span> (<span class="dt">Order</span> coffee newId)</span>
-<span id="cb92-5"><a href="#cb92-5"></a></span>
-<span id="cb92-6"><a href="#cb92-6"></a><span class="ot">createOrders ::</span> [<span class="dt">Coffee</span>] <span class="ot">-&gt;</span> <span class="dt">State</span> <span class="dt">Int</span> [<span class="dt">Order</span>]</span>
-<span id="cb92-7"><a href="#cb92-7"></a>createOrders <span class="ot">=</span> <span class="fu">mapM</span> createOrder</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb93-1"><a href="#cb93-1"></a><span class="ot">createOrder ::</span> <span class="dt">Coffee</span> <span class="ot">-&gt;</span> <span class="dt">State</span> <span class="dt">Int</span> <span class="dt">Order</span></span>
+<span id="cb93-2"><a href="#cb93-2"></a>createOrder coffee <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb93-3"><a href="#cb93-3"></a>  newId <span class="ot">&lt;-</span> getNewId</span>
+<span id="cb93-4"><a href="#cb93-4"></a>  <span class="fu">return</span> (<span class="dt">Order</span> coffee newId)</span>
+<span id="cb93-5"><a href="#cb93-5"></a></span>
+<span id="cb93-6"><a href="#cb93-6"></a><span class="ot">createOrders ::</span> [<span class="dt">Coffee</span>] <span class="ot">-&gt;</span> <span class="dt">State</span> <span class="dt">Int</span> [<span class="dt">Order</span>]</span>
+<span id="cb93-7"><a href="#cb93-7"></a>createOrders <span class="ot">=</span> <span class="fu">mapM</span> createOrder</span></code></pre></div>
 </section>
 <section id="еще-монады" class="slide level2">
 <h2>Еще монады!</h2>
-<div class="sourceCode" id="cb93"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb93-1"><a href="#cb93-1"></a><span class="kw">class</span> <span class="dt">Monad</span> [] <span class="kw">where</span></span>
-<span id="cb93-2"><a href="#cb93-2"></a>  <span class="fu">return</span> x <span class="ot">=</span> [x]</span>
-<span id="cb93-3"><a href="#cb93-3"></a></span>
-<span id="cb93-4"><a href="#cb93-4"></a><span class="ot">  (&gt;&gt;=) ::</span> [a] <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> [b]) <span class="ot">-&gt;</span> [b]</span>
-<span id="cb93-5"><a href="#cb93-5"></a>  [] <span class="op">&gt;&gt;=</span> _ <span class="ot">=</span> []</span>
-<span id="cb93-6"><a href="#cb93-6"></a>  (a <span class="op">:</span> aa) <span class="op">&gt;&gt;=</span> f <span class="ot">=</span> f a <span class="op">&lt;&gt;</span> (a <span class="op">&gt;&gt;=</span> f)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb94-1"><a href="#cb94-1"></a><span class="kw">class</span> <span class="dt">Monad</span> [] <span class="kw">where</span></span>
+<span id="cb94-2"><a href="#cb94-2"></a>  <span class="fu">return</span> x <span class="ot">=</span> [x]</span>
+<span id="cb94-3"><a href="#cb94-3"></a></span>
+<span id="cb94-4"><a href="#cb94-4"></a><span class="ot">  (&gt;&gt;=) ::</span> [a] <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> [b]) <span class="ot">-&gt;</span> [b]</span>
+<span id="cb94-5"><a href="#cb94-5"></a>  [] <span class="op">&gt;&gt;=</span> _ <span class="ot">=</span> []</span>
+<span id="cb94-6"><a href="#cb94-6"></a>  (a <span class="op">:</span> aa) <span class="op">&gt;&gt;=</span> f <span class="ot">=</span> f a <span class="op">&lt;&gt;</span> (a <span class="op">&gt;&gt;=</span> f)</span></code></pre></div>
 <p><span class="fragment">Контекст недетерменированности (нескольких вариантов)</span></p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb94-1"><a href="#cb94-1"></a>grid <span class="ot">=</span> <span class="kw">do</span></span>
-<span id="cb94-2"><a href="#cb94-2"></a>  x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">5</span>]</span>
-<span id="cb94-3"><a href="#cb94-3"></a>  y <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">5</span>]</span>
-<span id="cb94-4"><a href="#cb94-4"></a>  <span class="fu">return</span> (x, y)</span>
-<span id="cb94-5"><a href="#cb94-5"></a></span>
-<span id="cb94-6"><a href="#cb94-6"></a><span class="co">-- [(1,1),(1,2),(1,3),(1,4),(1,5),(2,1),(2,2),(2,3),(2,4),(2,5),(3,1),(3,2),(3,3),(3,4),(3,5),(4,1),(4,2),(4,3),(4,4),(4,5),(5,1),(5,2),(5,3),(5,4),(5,5)]</span></span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb95-1"><a href="#cb95-1"></a>grid <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb95-2"><a href="#cb95-2"></a>  x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">5</span>]</span>
+<span id="cb95-3"><a href="#cb95-3"></a>  y <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">5</span>]</span>
+<span id="cb95-4"><a href="#cb95-4"></a>  <span class="fu">return</span> (x, y)</span>
+<span id="cb95-5"><a href="#cb95-5"></a></span>
+<span id="cb95-6"><a href="#cb95-6"></a><span class="co">-- [(1,1),(1,2),(1,3),(1,4),(1,5),(2,1),(2,2),(2,3),(2,4),(2,5),(3,1),(3,2),(3,3),(3,4),(3,5),(4,1),(4,2),(4,3),(4,4),(4,5),(5,1),(5,2),(5,3),(5,4),(5,5)]</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
 <p>Тривиальная монада</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb95-1"><a href="#cb95-1"></a><span class="kw">data</span> <span class="dt">Identity</span> a <span class="ot">=</span> <span class="dt">Identity</span> {<span class="ot"> runIdentity ::</span> a }</span>
-<span id="cb95-2"><a href="#cb95-2"></a></span>
-<span id="cb95-3"><a href="#cb95-3"></a><span class="kw">class</span> <span class="dt">Monad</span> <span class="dt">Identity</span> <span class="kw">where</span></span>
-<span id="cb95-4"><a href="#cb95-4"></a>  <span class="fu">return</span> x <span class="ot">=</span> <span class="dt">Identity</span> x</span>
-<span id="cb95-5"><a href="#cb95-5"></a></span>
-<span id="cb95-6"><a href="#cb95-6"></a><span class="ot">  (&gt;&gt;=) ::</span> <span class="dt">Identity</span> a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> <span class="dt">Identity</span> b) <span class="ot">-&gt;</span> <span class="dt">Identity</span> b</span>
-<span id="cb95-7"><a href="#cb95-7"></a>  (<span class="dt">Identity</span> a) <span class="op">&gt;&gt;=</span> f <span class="ot">=</span> <span class="dt">Identity</span> (f a)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb96-1"><a href="#cb96-1"></a><span class="kw">data</span> <span class="dt">Identity</span> a <span class="ot">=</span> <span class="dt">Identity</span> {<span class="ot"> runIdentity ::</span> a }</span>
+<span id="cb96-2"><a href="#cb96-2"></a></span>
+<span id="cb96-3"><a href="#cb96-3"></a><span class="kw">class</span> <span class="dt">Monad</span> <span class="dt">Identity</span> <span class="kw">where</span></span>
+<span id="cb96-4"><a href="#cb96-4"></a>  <span class="fu">return</span> x <span class="ot">=</span> <span class="dt">Identity</span> x</span>
+<span id="cb96-5"><a href="#cb96-5"></a></span>
+<span id="cb96-6"><a href="#cb96-6"></a><span class="ot">  (&gt;&gt;=) ::</span> <span class="dt">Identity</span> a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> <span class="dt">Identity</span> b) <span class="ot">-&gt;</span> <span class="dt">Identity</span> b</span>
+<span id="cb96-7"><a href="#cb96-7"></a>  (<span class="dt">Identity</span> a) <span class="op">&gt;&gt;=</span> f <span class="ot">=</span> <span class="dt">Identity</span> (f a)</span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb96"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb96-1"><a href="#cb96-1"></a><span class="kw">class</span> <span class="dt">Applicative</span> m <span class="ot">=&gt;</span> <span class="dt">Monad</span> m <span class="kw">where</span></span>
-<span id="cb96-2"><a href="#cb96-2"></a><span class="ot">  return ::</span> a <span class="ot">-&gt;</span> m a</span>
-<span id="cb96-3"><a href="#cb96-3"></a><span class="ot">  (&gt;&gt;=) ::</span> m a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> m b</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb97-1"><a href="#cb97-1"></a><span class="kw">class</span> <span class="dt">Applicative</span> m <span class="ot">=&gt;</span> <span class="dt">Monad</span> m <span class="kw">where</span></span>
+<span id="cb97-2"><a href="#cb97-2"></a><span class="ot">  return ::</span> a <span class="ot">-&gt;</span> m a</span>
+<span id="cb97-3"><a href="#cb97-3"></a><span class="ot">  (&gt;&gt;=) ::</span> m a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> m b</span></code></pre></div>
 <p><span class="fragment">Монада – перегрузка композиции функций.</span></p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb97-1"><a href="#cb97-1"></a><span class="kw">class</span> <span class="dt">Functor</span> m <span class="ot">=&gt;</span> <span class="dt">Applicative</span> m <span class="kw">where</span></span>
-<span id="cb97-2"><a href="#cb97-2"></a><span class="ot">  pure ::</span> a <span class="ot">-&gt;</span> m a</span>
-<span id="cb97-3"><a href="#cb97-3"></a><span class="ot">  (&lt;*&gt;) ::</span> m (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m b</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb98-1"><a href="#cb98-1"></a><span class="kw">class</span> <span class="dt">Functor</span> m <span class="ot">=&gt;</span> <span class="dt">Applicative</span> m <span class="kw">where</span></span>
+<span id="cb98-2"><a href="#cb98-2"></a><span class="ot">  pure ::</span> a <span class="ot">-&gt;</span> m a</span>
+<span id="cb98-3"><a href="#cb98-3"></a><span class="ot">  (&lt;*&gt;) ::</span> m (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m b</span></code></pre></div>
 <p><span class="fragment">Аппликативный функтор – перегрузка применения функций.</span></p>
 <p><span class="fragment">– Почему не <code>(a -&gt; b) -&gt; f a -&gt; f b</code>.</span></p>
 <p><span class="fragment">– Это <code>fmap</code>. (И функции нескольких аргументов)</span></p>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb98"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb98-1"><a href="#cb98-1"></a>(a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
-<div class="sourceCode" id="cb99"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb99-1"><a href="#cb99-1"></a>(a <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> c)) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f (b <span class="ot">-&gt;</span> c)</span></code></pre></div>
-<div class="sourceCode" id="cb100"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb100-1"><a href="#cb100-1"></a><span class="ot">getMarkup ::</span> <span class="dt">Env</span> <span class="dt">Markup</span></span>
-<span id="cb100-2"><a href="#cb100-2"></a><span class="ot">getPrice ::</span> <span class="dt">Env</span> <span class="dt">Price</span></span>
-<span id="cb100-3"><a href="#cb100-3"></a><span class="ot">getPayment ::</span> <span class="dt">Markup</span> <span class="ot">-&gt;</span> <span class="dt">Price</span> <span class="ot">-&gt;</span> <span class="dt">Payment</span></span></code></pre></div>
-<div class="sourceCode" id="cb101"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb101-1"><a href="#cb101-1"></a><span class="ot">payment ::</span> <span class="dt">Env</span> <span class="dt">Payment</span></span>
-<span id="cb101-2"><a href="#cb101-2"></a>payment <span class="ot">=</span> <span class="fu">fmap</span> getPayment getMarkup <span class="op">&lt;*&gt;</span> getPrice</span></code></pre></div>
-<div class="sourceCode" id="cb102"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb102-1"><a href="#cb102-1"></a>payment <span class="ot">=</span> <span class="fu">fmap</span> getPayment getMarkup <span class="op">&lt;*&gt;</span> getPrice</span>
-<span id="cb102-2"><a href="#cb102-2"></a><span class="co">--        ^-------------^</span></span>
-<span id="cb102-3"><a href="#cb102-3"></a><span class="co">-- Env Markup -&gt; Env (Price -&gt; Payment)</span></span></code></pre></div>
-<div class="sourceCode" id="cb103"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb103-1"><a href="#cb103-1"></a>(<span class="op">&lt;$&gt;</span>) <span class="ot">=</span> <span class="fu">fmap</span></span></code></pre></div>
-<div class="sourceCode" id="cb104"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb104-1"><a href="#cb104-1"></a>payment <span class="ot">=</span> getPayment <span class="op">&lt;$&gt;</span> getMarkup <span class="op">&lt;*&gt;</span> getPrice</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb99-1"><a href="#cb99-1"></a>(a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb100-1"><a href="#cb100-1"></a>(a <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> c)) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f (b <span class="ot">-&gt;</span> c)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb101-1"><a href="#cb101-1"></a><span class="ot">getMarkup ::</span> <span class="dt">Env</span> <span class="dt">Markup</span></span>
+<span id="cb101-2"><a href="#cb101-2"></a><span class="ot">getPrice ::</span> <span class="dt">Env</span> <span class="dt">Price</span></span>
+<span id="cb101-3"><a href="#cb101-3"></a><span class="ot">getPayment ::</span> <span class="dt">Markup</span> <span class="ot">-&gt;</span> <span class="dt">Price</span> <span class="ot">-&gt;</span> <span class="dt">Payment</span></span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb102-1"><a href="#cb102-1"></a><span class="ot">payment ::</span> <span class="dt">Env</span> <span class="dt">Payment</span></span>
+<span id="cb102-2"><a href="#cb102-2"></a>payment <span class="ot">=</span> <span class="fu">fmap</span> getPayment getMarkup <span class="op">&lt;*&gt;</span> getPrice</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb103-1"><a href="#cb103-1"></a>payment <span class="ot">=</span> <span class="fu">fmap</span> getPayment getMarkup <span class="op">&lt;*&gt;</span> getPrice</span>
+<span id="cb103-2"><a href="#cb103-2"></a><span class="co">--        ^-------------^</span></span>
+<span id="cb103-3"><a href="#cb103-3"></a><span class="co">-- Env Markup -&gt; Env (Price -&gt; Payment)</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb104-1"><a href="#cb104-1"></a>(<span class="op">&lt;$&gt;</span>) <span class="ot">=</span> <span class="fu">fmap</span></span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb105-1"><a href="#cb105-1"></a>payment <span class="ot">=</span> getPayment <span class="op">&lt;$&gt;</span> getMarkup <span class="op">&lt;*&gt;</span> getPrice</span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb105"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb105-1"><a href="#cb105-1"></a><span class="ot">(&lt;*&gt;) ::</span> m (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m b</span>
-<span id="cb105-2"><a href="#cb105-2"></a>f <span class="op">&lt;*&gt;</span> ma <span class="ot">=</span> ma <span class="op">&gt;&gt;=</span> \a <span class="ot">-&gt;</span> <span class="fu">fmap</span> (\f&#39; <span class="ot">-&gt;</span> f&#39; a) f</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb106-1"><a href="#cb106-1"></a><span class="ot">(&lt;*&gt;) ::</span> m (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m b</span>
+<span id="cb106-2"><a href="#cb106-2"></a>mf <span class="op">&lt;*&gt;</span> ma <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb106-3"><a href="#cb106-3"></a>  f <span class="ot">&lt;-</span> mf</span>
+<span id="cb106-4"><a href="#cb106-4"></a>  a <span class="ot">&lt;-</span> ma</span>
+<span id="cb106-5"><a href="#cb106-5"></a>  <span class="fu">return</span> (f a)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb107-1"><a href="#cb107-1"></a><span class="ot">ap ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> m (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m b</span>
+<span id="cb107-2"><a href="#cb107-2"></a>ap mf ma <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb107-3"><a href="#cb107-3"></a>  f <span class="ot">&lt;-</span> mf</span>
+<span id="cb107-4"><a href="#cb107-4"></a>  a <span class="ot">&lt;-</span> ma</span>
+<span id="cb107-5"><a href="#cb107-5"></a>  <span class="fu">return</span> (f a)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode haskell fragment"><code class="sourceCode haskell"><span id="cb108-1"><a href="#cb108-1"></a><span class="kw">instance</span> <span class="dt">Monad</span> <span class="op">...</span> <span class="kw">where</span> <span class="op">...</span></span>
+<span id="cb108-2"><a href="#cb108-2"></a></span>
+<span id="cb108-3"><a href="#cb108-3"></a><span class="kw">instance</span> <span class="dt">Applicative</span> <span class="op">...</span> <span class="kw">where</span></span>
+<span id="cb108-4"><a href="#cb108-4"></a>  <span class="fu">pure</span> <span class="ot">=</span> <span class="fu">return</span></span>
+<span id="cb108-5"><a href="#cb108-5"></a>  (<span class="op">&lt;*&gt;</span>) <span class="ot">=</span> ap</span></code></pre></div>
 </section></section>
     </div>
   </div>
