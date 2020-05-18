@@ -12,7 +12,7 @@
   - [Lists](http://learnyouahaskell.com/starting-out#an-intro-to-lists)
   - [Quicksort](http://learnyouahaskell.com/recursion#quick-sort)
   - [Parametric polymorphism in structures](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#type-parameters)
-- Lecture 2 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/2.md)] [[web](https://ikohse.github.io/sc-lectures/2.html)] [[Seminar](https://github.com/ikoHSE/sc-task-2)]
+- Lecture 2 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/2.md)] [[web](https://ikohse.github.io/sc-lectures/2.html)] [[Seminar](https://github.com/ikoHSE/sc-task-2)] [[YouTube Lecture](https://youtu.be/oRGSA_drOQE)] [[YouTube Seminar](https://youtu.be/vXJPfBwUu08)]
   - [Record syntax](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#record-syntax)
   - [Typeclasses](http://learnyouahaskell.com/types-and-typeclasses#typeclasses-101)
   - [Typeclass instances](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#typeclasses-102)
@@ -27,7 +27,7 @@
     - [`Either`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Either.html#t:Either)
   - [`Functor`](http://learnyouahaskell.com/functors-applicative-functors-and-monoids#functors-redux)
   - [`Alternative`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html#t:Alternative)
-- Lecture 3 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/3.md)] [[web](https://ikohse.github.io/sc-lectures/3.html)] [[Seminar](https://github.com/ikoHSE/sc-task-3)]
+- Lecture 3 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/3.md)] [[web](https://ikohse.github.io/sc-lectures/3.html)] [[Seminar](https://github.com/ikoHSE/sc-task-3)] [[YouTube Lecture](https://youtu.be/8aio5zZoDY8)]
   - [`Monad`](http://www.learnyouahaskell.com/a-fistful-of-monads)
   - [`Reader`](http://learnyouahaskell.com/for-a-few-monads-more#reader)
   - [`do` syntax](https://en.wikibooks.org/wiki/Haskell/do_notation#Translating_the_bind_operator)
