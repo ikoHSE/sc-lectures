@@ -27,7 +27,7 @@
     - [`Either`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Either.html#t:Either)
   - [`Functor`](http://learnyouahaskell.com/functors-applicative-functors-and-monoids#functors-redux)
   - [`Alternative`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html#t:Alternative)
-- Lecture 3 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/3.md)] [[web](https://ikohse.github.io/sc-lectures/3.html)] [[Seminar](https://github.com/ikoHSE/sc-task-3)] [[YouTube Lecture](https://youtu.be/8aio5zZoDY8)]
+- Lecture 3 [[md](https://github.com/ikoHSE/sc-lectures/blob/master/3.md)] [[web](https://ikohse.github.io/sc-lectures/3.html)] [[Seminar](https://github.com/ikoHSE/sc-task-3)] [[YouTube Lecture](https://youtu.be/8aio5zZoDY8)][[YouTube Seminar](https://youtu.be/W6Qfz4Wsjek)]
   - [`Monad`](http://www.learnyouahaskell.com/a-fistful-of-monads)
   - [`Reader`](http://learnyouahaskell.com/for-a-few-monads-more#reader)
   - [`do` syntax](https://en.wikibooks.org/wiki/Haskell/do_notation#Translating_the_bind_operator)
