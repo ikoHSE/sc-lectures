@@ -1,0 +1,114 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: be8617e31ced95a5ce5417438f31b676910f80384e47ef5aae1c359c8df9d857
+
+name:           l5
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/l5#readme>
+homepage:       https://github.com/githubuser/l5#readme
+bug-reports:    https://github.com/githubuser/l5/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/l5
+
+library
+  exposed-modules:
+      Handlers
+      Handlers.Posts
+      Handlers.Users.Registration
+      Orphans
+      Server
+      Types
+      Types.Hash
+      Types.Post
+      Types.Server
+      Types.Users
+  other-modules:
+      Paths_l5
+  hs-source-dirs:
+      src
+  default-extensions: OverloadedStrings DeriveGeneric GeneralizedNewtypeDeriving FlexibleContexts
+  ghc-options: -fwarn-unused-binds -fwarn-unused-imports -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wpartial-fields -Werror=missing-home-modules -Wmissing-home-modules -Widentities -Wredundant-constraints -Wmissing-export-lists -Wunused-imports
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , base64-bytestring
+    , bytestring
+    , containers
+    , cookie
+    , cryptonite
+    , http-types
+    , mtl
+    , stm
+    , text
+    , time
+    , wai
+    , warp
+  default-language: Haskell2010
+
+executable l5-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_l5
+  hs-source-dirs:
+      app
+  default-extensions: OverloadedStrings DeriveGeneric GeneralizedNewtypeDeriving FlexibleContexts
+  ghc-options: -fwarn-unused-binds -fwarn-unused-imports -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wpartial-fields -Werror=missing-home-modules -Wmissing-home-modules -Widentities -Wredundant-constraints -Wmissing-export-lists -Wunused-imports -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , base64-bytestring
+    , bytestring
+    , containers
+    , cookie
+    , cryptonite
+    , http-types
+    , l5
+    , mtl
+    , stm
+    , text
+    , time
+    , wai
+    , warp
+  default-language: Haskell2010
+
+test-suite l5-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_l5
+  hs-source-dirs:
+      test
+  default-extensions: OverloadedStrings DeriveGeneric GeneralizedNewtypeDeriving FlexibleContexts
+  ghc-options: -fwarn-unused-binds -fwarn-unused-imports -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wpartial-fields -Werror=missing-home-modules -Wmissing-home-modules -Widentities -Wredundant-constraints -Wmissing-export-lists -Wunused-imports -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , base64-bytestring
+    , bytestring
+    , containers
+    , cookie
+    , cryptonite
+    , http-types
+    , l5
+    , mtl
+    , stm
+    , text
+    , time
+    , wai
+    , warp
+  default-language: Haskell2010

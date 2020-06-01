@@ -1,0 +1,69 @@
+name:                l5
+version:             0.1.0.0
+github:              "githubuser/l5"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2020 Author name here"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/l5#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- wai
+- warp
+- http-types
+- stm
+- containers
+- aeson
+- text
+- mtl
+- bytestring
+- cookie
+- cryptonite
+- base64-bytestring
+- time
+
+default-extensions:
+- OverloadedStrings
+- DeriveGeneric
+- GeneralizedNewtypeDeriving
+- FlexibleContexts
+
+library:
+  source-dirs: src
+
+executables:
+  l5-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - l5
+
+tests:
+  l5-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - l5
+
+ghc-options: "-fwarn-unused-binds -fwarn-unused-imports -Wall -Wincomplete-uni-patterns -Wincomplete-record-updates -Wpartial-fields -Werror=missing-home-modules -Wmissing-home-modules -Widentities -Wredundant-constraints -Wmissing-export-lists -Wunused-imports"
