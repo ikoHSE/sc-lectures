@@ -8,7 +8,6 @@ import qualified Data.ByteString.Lazy.Char8 as BSLC
 import Data.List
 import qualified Data.Map as M
 import Data.Text (Text)
-import Debug.Trace
 import Handlers
 import Network.HTTP.Types.Method
 import Network.HTTP.Types.Status
@@ -57,15 +56,10 @@ runAuthHandler ::
 runAuthHandler f req = do
   let authCookie =
         fmap snd
-          . traceShowId
           . find ((==) authCookieNameBS . fst)
-          . traceShowId
           . mconcat
-          . traceShowId
           . fmap (parseCookies . snd)
-          . traceShowId
           . filter ((==) "Cookie" . fst)
-          . traceShowId
           $ requestHeaders req
       decodedCookie = authCookie >>= either (const Nothing) Just . decodeCookie
   cookiesTVar <- asks cookies

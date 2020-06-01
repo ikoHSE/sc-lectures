@@ -102,7 +102,7 @@ class ServerError e where
   serverErrorStatus _ = status422
 
 throwServerError ::
-  (MonadError (ServerResponse ByteString) m, ServerError e, Show e) =>
+  (MonadError ResponseError m, ServerError e, Show e) =>
   e ->
   m a
 throwServerError e =
